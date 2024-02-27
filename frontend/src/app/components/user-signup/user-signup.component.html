@@ -1,0 +1,53 @@
+
+<div class="background">
+    <mat-card class="login-card">
+        <div class="logo-container">
+            <img src="../../../assets/images/logo.png" alt="Logo" class="logo">
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="fill" class="form-feild">
+                <mat-label>Email:</mat-label>
+                <input matInput type="email" id="email" formControlName="userEmail" />
+                <mat-error *ngIf="loginForm.get('userEmail')?.hasError('required')" style="color: red;">Email is
+                    required.</mat-error>
+                <mat-error *ngIf="loginForm.get('userEmail')?.hasError('email')" style="color: red;">Invalid email
+                    address.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="form-feild">
+                <mat-label>Name:</mat-label>
+                <input matInput type="text" id="name" formControlName="userName" />
+                <mat-error *ngIf="loginForm.get('userName')?.hasError('required')" style="color: red;">Name is
+                    required.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="form-feild">
+                <mat-label>Phone Number:</mat-label>
+                <input matInput type="tel" id="phoneNumber" formControlName="userNumber" />
+                <mat-error *ngIf="loginForm.get('userNumber')?.hasError('required')" style="color: red;">Phone number
+                    is required.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="form-feild">
+                <mat-label>Password:</mat-label>
+                <input matInput type="password" id="password" formControlName="userPassword" />
+                <mat-error *ngIf="loginForm.get('userPassword')?.hasError('required')" style="color: red;">Password is
+                    required.</mat-error>
+                <mat-error *ngIf="loginForm.get('userPassword')?.hasError('minlength')" style="color: red;">Password must be
+                    at least 6 characters.</mat-error>
+            </mat-form-field>
+
+            <!-- <mat-form-field class="form-feild" appearance="fill">
+                <mat-label>Confirm Password:</mat-label>
+                <input matInput type="password" id="confirmPassword" formControlName="confirmPassword" />
+                <mat-error *ngIf="loginForm.get('confirmPassword')?.hasError('required')" style="color: red;">Confirm
+                    Password is required.</mat-error>
+                <mat-error *ngIf="loginForm.hasError('passwordMismatch')" style="color: red;">Passwords do not
+                    match.</mat-error>
+            </mat-form-field> -->
+
+            <button mat-raised-button color="primary" type="submit">Signup</button>
+        </form>
+    </mat-card>
+</div>

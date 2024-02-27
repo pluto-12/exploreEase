@@ -1,0 +1,59 @@
+<!-- navbar.component.html -->
+
+<mat-toolbar color="primary">
+
+    <img src="../../../assets/images/logo.png" alt="Logo" class="logo">
+
+    <ng-container *ngIf="role == 'cordinator'">
+        <span class="title">Coordinator Home</span>
+    </ng-container>
+    <ng-container *ngIf="role == 'user'">
+        <span class="title">User Home</span>
+    </ng-container>
+    <ng-container *ngIf="role == 'admin'">
+        <span class="title">Admin Home</span>
+    </ng-container>
+
+    <div class="location-container">
+        <mat-icon class="location-icon">location_on</mat-icon>
+        <span class="location-text">Trivandrum</span>
+    </div>
+
+    <button mat-icon-button [matMenuTriggerFor]="profileMenu" [matMenuTriggerData]="{ origin: profileButton }">
+        <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #profileMenu="matMenu">
+        <button mat-menu-item>Profile</button>
+        <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
+    <div #profileButton></div>
+    
+</mat-toolbar>
+
+<ng-container *ngIf="role == 'cordinator'">
+    <mat-tab-group>
+        <mat-tab label="Places">
+            <app-place-list></app-place-list>
+        </mat-tab>
+        <mat-tab label="Events"></mat-tab>
+        <mat-tab label="Guides">
+            <app-guide-list></app-guide-list>
+        </mat-tab>
+        <mat-tab label="Guide Requests">
+            <app-guide-requests></app-guide-requests>
+        </mat-tab>
+    </mat-tab-group>
+</ng-container>
+
+<ng-container *ngIf="role == 'admin'">
+    <mat-tab-group>
+        <mat-tab label="Users">
+            <app-user-list></app-user-list>
+        </mat-tab>
+        <mat-tab label="Places"></mat-tab>
+        <mat-tab label="Events"></mat-tab>
+        <mat-tab label="Guides"></mat-tab>
+    </mat-tab-group>
+</ng-container>
+
+

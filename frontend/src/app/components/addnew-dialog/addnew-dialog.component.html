@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Add New Place</h2>
+<div mat-dialog-content>
+    <form [formGroup]="placeForm" (ngSubmit)="onSubmit()">
+        <label for="name">Place Name:</label>
+        <input type="text" id="guideName" formControlName="name">
+    
+        <label for="placeDescription">Description:</label>
+        <input type="email" id="guideEmail" formControlName="placeDescription">
+    
+        <label for="location">Location:</label>
+        <input type="text" id="location" formControlName="location">
+    
+        <label for="image">Image:</label>
+        <input type="file" id="idCard" formControlName="image" (change)="onFileSelected($event)" accept="image/*">
+    
+    
+        <!-- <button type="submit" [disabled]="signupForm.invalid">Add</button> -->
+        <button type="submit">Add</button>
+      </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="true">Close</button>
+</div>

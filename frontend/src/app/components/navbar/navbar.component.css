@@ -1,0 +1,37 @@
+/* navbar.component.css */
+
+.mat-toolbar {
+  background-color: #de99d2;
+  color: #333;
+  height: 80px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 16px;
+}
+
+.title {
+  flex-grow: 1;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.location-container {
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+}
+
+.location-icon {
+  margin-right: 4px;
+}
+
+.mat-tab-group {
+  background-color: #d5a6cd; /* Customize background color */
+  margin-top: 8px; /* Adjust the space between main and sub-navigation */
+  border-radius: 4px; /* Optional: Add border-radius for a rounded appearance */
+  display: flex;
+  justify-content: space-around;
+}

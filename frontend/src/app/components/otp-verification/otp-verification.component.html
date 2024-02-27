@@ -1,0 +1,28 @@
+
+<div class="background">
+    <mat-card class="login-card">
+        <div class="logo-container">
+            <img src="../../../assets/images/logo.png" alt="Logo" class="logo">
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="fill" class="form-feild">
+                <mat-label>OTP:</mat-label>
+                <input matInput type="email" id="otp" formControlName="otp" />
+                <mat-error *ngIf="loginForm.get('otp')?.hasError('required')" style="color: red;">Cannot be Empty.</mat-error>
+                <!-- <mat-error *ngIf="otpError" style="color: red;">Invalid OTP.</mat-error> -->              
+            </mat-form-field>
+            <br>
+            <span *ngIf="otpError"  style="color: red;">Invalid OTP.</span>
+            <br>
+            <div *ngIf="countdown > 0">
+                Time Remaining: {{countdown}} seconds
+            </div>
+            <button *ngIf="countdown == 0" mat-raised-button color="primary" (click)="resendOtp()">Resend Otp </button>
+
+            
+
+            <button mat-raised-button color="primary" type="submit">Confirm</button>
+        </form>
+    </mat-card>
+</div>

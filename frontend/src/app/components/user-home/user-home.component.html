@@ -1,0 +1,21 @@
+<app-navbar></app-navbar>
+<div class="container">
+    <mat-card class="places-container" *ngFor="let place of places;">
+        <a routerLink="/user/place" [queryParams]="{'id': place.id}">
+            <mat-card-header>
+                <mat-card-title>{{ place.placeName }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-grid-list cols="2" rowHeight="1:1">
+                    <mat-grid-tile xs="6" sm="4" md="3">
+                        <img mat-card-image [src]="place.placeImage" alt="{{ place.placeName }}">
+                    </mat-grid-tile>
+                    <mat-grid-tile xs="6" sm="8" md="9">
+                        <p>{{ place.placeDescription }}</p>
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </mat-card-content>
+        </a>
+
+    </mat-card>
+</div>

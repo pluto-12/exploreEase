@@ -1,0 +1,9 @@
+.table-container {
+  display: flex;
+  justify-content: center;
+}
+
+.mat-table {
+  width: 100%;
+  max-width: 800px; /* Adjust the max-width according to your preference */
+}

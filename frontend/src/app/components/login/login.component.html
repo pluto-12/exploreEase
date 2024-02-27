@@ -1,0 +1,32 @@
+<div class="background">
+    <mat-card class="login-card">
+        <div class="logo-container">
+            <img src="../../../assets/images/logo.png" alt="Logo" class="logo">
+        </div>
+
+        <div id="google-btn"></div>
+        
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <mat-form-field class="form-input" appearance="fill">
+                <mat-label>Email:</mat-label>
+                <input matInput type="email" id="email" formControlName="email" />
+                <mat-error *ngIf="loginForm.get('email')?.hasError('required')" style="color: red;">Email is
+                    required.</mat-error>
+                <mat-error *ngIf="loginForm.get('email')?.hasError('email')" style="color: red;">Invalid email
+                    address.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-input" appearance="fill">
+                <mat-label>Password:</mat-label>
+                <input matInput type="password" id="password" formControlName="password" />
+                <mat-error *ngIf="loginForm.get('password')?.hasError('required')" style="color: red;">Password is
+                    required.</mat-error>
+                <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')" style="color: red;">Password must be
+                    at least 6
+                    characters.</mat-error>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit">Login</button>
+        </form>
+    </mat-card>
+</div>

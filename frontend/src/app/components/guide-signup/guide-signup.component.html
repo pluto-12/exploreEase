@@ -1,0 +1,36 @@
+<div class="signup-container">
+  <div class="background-image"></div>
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <label for="guideName">Guide Name:</label>
+    <input type="text" id="guideName" formControlName="guideName">
+
+    <label for="guideEmail">Guide Email:</label>
+    <input type="email" id="guideEmail" formControlName="guideEmail">
+
+    <label for="dateOfBirth">Date of Birth:</label>
+    <input type="date" id="dateOfBirth" formControlName="dateOfBirth">
+
+    <label for="location">Location:</label>
+    <input type="text" id="location" formControlName="location">
+
+    <label for="idCard">ID Card (Image):</label>
+    <input type="file" id="idCard" formControlName="idCard" (change)="onFileSelected($event)" accept="image/*">
+    <!-- <input type="file" id="idCard" formControlName="idCard" accept="image/*"> -->
+
+
+    <!-- <button type="submit" [disabled]="signupForm.invalid">Sign Up</button> -->
+    <button type="submit">Sign Up</button>
+  </form>
+
+  <ng-container *ngIf="matDialog == true" class="overlay-container">
+    <h1 mat-dialog-title>Success</h1>
+    <div mat-dialog-content>
+      <p>Waiting For Aproval</p>  
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close routerLink="/">OK</button>
+    </div>
+  </ng-container>
+  
+
+</div>

@@ -21,9 +21,14 @@
 
             <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef>Action</th>
-                <td mat-cell *matCellDef="let element"><button mat-icon-button color="warn" matTooltip="Block"><mat-icon>block</mat-icon></button></td>
+                <td mat-cell *matCellDef="let element">
+                    <div>
+                        <button (click)="openInfoDialog(element._id)" mat-icon-button color="primary" matTooltip="Images"><mat-icon>collections</mat-icon></button>
+                        <button mat-icon-button color="warn" matTooltip="Disable"><mat-icon>block</mat-icon></button>
+                    </div>
+                </td>
             </ng-container>
- 
+
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>

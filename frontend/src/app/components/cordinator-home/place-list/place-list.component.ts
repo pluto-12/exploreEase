@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { PlaceService } from 'src/app/service/place/place.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddnewDialogComponent } from '../../addnew-dialog/addnew-dialog.component';
+import { InfoDialogComponent } from '../../info-dialog/info-dialog.component';
 
 @Component({
   selector: 'app-place-list',
@@ -17,6 +18,7 @@ export class PlaceListComponent {
     'district',
     'action',
   ];
+  imageSrc: any
 
   constructor(
     private placeService: PlaceService,
@@ -45,5 +47,20 @@ export class PlaceListComponent {
         }
       });
     });
+  }
+
+  openInfoDialog(id: number) {
+    this.placeService.getPlaceImageById(id).subscribe((response) => {
+      const reader = new FileReader();
+        // reader.readAsDataURL(response);
+        reader.onloadend = () => {
+          this.imageSrc = reader.result as String;
+          const dialogRef = this.dialog.open(InfoDialogComponent, {
+            width: '1000px',
+            data: this.imageSrc,
+          });
+        };
+        reader.readAsDataURL(response)
+    })   
   }
 }

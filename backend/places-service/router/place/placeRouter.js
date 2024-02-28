@@ -20,6 +20,7 @@ placeRouter.post('/addplace', upload.single('file'), placeController.addPlace)
 placeRouter.get('/showplaces', placeController.showPlacesByDistrict)
 placeRouter.get('/showallplaces', placeController.showAllPlaces)
 placeRouter.get('/getplacedetails', placeController.showPlaceById)
+placeRouter.get('/getplaceimage', placeController.getPlaceImageById)
 
 
 

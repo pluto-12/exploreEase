@@ -10,6 +10,8 @@ import { PlaceService } from 'src/app/service/place/place.service';
 export class PlaceDetailedComponent {
   constructor(private activatedRoute: ActivatedRoute, private placeService: PlaceService) {}
   placeId!: number;
+  placeImages: any = []
+  placeDetails!: any
 
 
   ngOnInit(): void {
@@ -20,7 +22,16 @@ export class PlaceDetailedComponent {
       this.placeId = params['id']
     });
     this.placeService.getPlaceById(this.placeId).subscribe((response) => {
-      console.log(response);  
+      console.log(response);
+      this.placeDetails = response.place
+    })
+    this.placeService.getPlaceImageById(this.placeId).subscribe((response) => {
+      console.log(response);   
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        this.placeImages = reader.result as string
+      }
+      reader.readAsDataURL(response)  
     })
   }
 }

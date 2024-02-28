@@ -58,12 +58,31 @@ const showAllPlaces = async (req, res) => {
 const showPlaceById = async (req, res) => {
     try {
         const id = req.query.id
-        const placeDetails = await placeCollection.find({_id: new ObjectId(id)})
+        const placeDetails = await placeCollection.find({ _id: new ObjectId(id) })
         console.log(placeDetails);
-        res.status(200)
+        res.status(200).json({place: placeDetails[0]})
     }
     catch (err) {
         console.log('Error at show place by id - ', err);
+    }
+}
+
+const getPlaceImageById = async (req, res) => {
+    try {
+        const id = req.query.id
+        const images = await placeCollection.find({ _id: new ObjectId(id) }, { placeImage: 1, _id: 0 })
+        // let placeImages = []
+        let imagePath
+        images[0].placeImage.forEach((image) => {
+            image = path.join(__dirname,'../../assets/places', image)
+            // placeImages.push(image)
+            imagePath = image
+        });
+        // console.log(placeImages);
+        res.sendFile(imagePath)
+    }
+    catch (err) {
+        console.log(err);
     }
 }
 
@@ -73,5 +92,6 @@ module.exports = {
     addPlace,
     showPlacesByDistrict,
     showAllPlaces,
-    showPlaceById
+    showPlaceById,
+    getPlaceImageById
 }

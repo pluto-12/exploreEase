@@ -1,2 +1,51 @@
 <app-navbar></app-navbar>
-<p>place-detailed works!</p>
+
+<div class="container">
+    <mat-card class="card">
+        <img mat-card-image [src]="placeImages" alt="Napier Museum">
+        <mat-card-content>
+            <h2>{{ placeDetails.placeName }}</h2>
+            <p>{{placeDetails.placeDescription}}</p>
+            <mat-divider></mat-divider>
+            <p>Rating: 5</p>
+            <mat-divider></mat-divider>
+            <h3>Reviews</h3>
+            <mat-list>
+                <!-- <mat-list-item *ngFor="let review of spot.reviews"> -->
+                <h4 mat-line>Author</h4>
+                <p mat-line>Review Content</p>
+                <!-- </mat-list-item> -->
+            </mat-list>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="card">
+        <mat-card-content>
+            <h3>Guide Availability</h3>
+            <div class="guide-availability">
+                <mat-card  class="guide-card">
+                    <mat-card-content>
+                        <p> Guide Name </p>
+                        <p> Guide Rating: 5 </p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="card">
+        <mat-card-content>
+            <h3>Blogs</h3>
+            <div class="blogs">
+                <div class="blog">
+                    <mat-card  class="blog-card">
+                        <mat-card-content>
+                          <h4> blog.title </h4>
+                          <p> blog.content </p>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -97,7 +97,7 @@ const getGuideImage = async (req, res) => {
         const guideDetails = await guideCollection.find({ guideEmail }, { idCard: 1 })
         const idCard = guideDetails[0].idCard
         const imagePath = path.join(__dirname, '../../assets/guide-id', idCard)
-        console.log(imagePath);
+        // console.log(imagePath);
         res.sendFile(imagePath)
     }
     catch (err) {

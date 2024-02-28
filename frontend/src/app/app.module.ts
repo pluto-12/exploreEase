@@ -20,6 +20,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatListModule } from "@angular/material/list";
 
 import { UserSignupComponent } from './components/user-signup/user-signup.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -83,6 +84,7 @@ import { PlaceDetailedComponent } from './components/place-detailed/place-detail
     MatDialogModule,
     MatTooltipModule,
     MatGridListModule,
+    MatListModule,
     HttpClientModule,
     StoreModule.forRoot({}, {}),
   ],

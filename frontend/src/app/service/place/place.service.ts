@@ -28,4 +28,8 @@ export class PlaceService {
   getPlaceById(id: number): Observable<any> {
     return this.http.get(`${environment.apigatewayUrl}/api-places/place/getplacedetails?id=${id}`)
   }
+
+  getPlaceImageById(id: number): Observable<any> {
+    return this.http.get(`${environment.apigatewayUrl}/api-places/place/getplaceimage?id=${id}`, {responseType: 'blob'})
+  }
 }

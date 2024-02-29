@@ -9,26 +9,25 @@ declare var google: any;
 export class ExternalService {
   constructor() {}
 
-  getCurrentPosition(): Observable<any> {
-    return new Observable((observer: Observer<any>) => {
+  getCurrentPosition(): Promise<GeolocationPosition> {
+    return new Promise((resolve, reject) => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-          (position: any) => {
-            observer.next(position);
-            observer.complete();
+          (position) => {
+            resolve(position);
           },
-          (error: any) => {
-            observer.error(error);
+          (error) => {
+            reject(error);
           }
         );
       } else {
-        observer.error('geolocation not supported');
+        reject(new Error('Geolocation is not supported by this browser.'));
       }
     });
   }
 
-  getPlaceName(latitude: number, longitude: number): Observable<string> {
-    return new Observable((observer: Observer<string>) => {
+  getPlaceName(latitude: number, longitude: number): Promise<string> {
+    return new Promise((resole, reject) => {
       const geocoder = new google.maps.Geocoder();
       const latlng = { lat: latitude, lng: longitude };
       let district: string;
@@ -43,13 +42,10 @@ export class ExternalService {
                 }
               });
             });
-            // console.log(district);
-            observer.next(district)
-            // observer.next(result[0].formatted_address);
-            observer.complete();
+            resole(district);
           }
         } else {
-          observer.error('Geocoder failed due to: ' + status);
+          reject('Geocoder failed due to: ' + status);
         }
       });
     });

@@ -22,12 +22,10 @@ export class UserHomeComponent {
   }
 
   getLocationAndPlace() {
-    this.externalService
-      .getCurrentPosition()
-      .subscribe((position: any) => {
+    this.externalService.getCurrentPosition().then((position: any) => {
         this.latitude = position.coords.latitude;
         this.longitude = position.coords.longitude;
-        this.externalService.getPlaceName(this.latitude, this.longitude).subscribe(
+        this.externalService.getPlaceName(this.latitude, this.longitude).then(
           (placeName: string) => {
             console.log('User Location:', this.latitude, this.longitude);
             console.log('Place Name:', placeName);

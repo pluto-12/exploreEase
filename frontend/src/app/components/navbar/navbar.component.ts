@@ -1,6 +1,8 @@
 import { Component, importProvidersFrom } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import * as UserActions from '../../store/user/user.actions';
 
 
 @Component({
@@ -10,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private store: Store) {}
   role: string = ""
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -27,6 +29,10 @@ export class NavbarComponent {
 
 
   logout() {
+    const currentUrl = this.router.url
+    if(currentUrl.startsWith('/user')) {
+      this.store.dispatch(UserActions.clearUser())
+    }
     localStorage.clear()
     this.router.navigateByUrl('')
   }

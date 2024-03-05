@@ -2,13 +2,16 @@ import { Component } from '@angular/core';
 import { ExternalService } from 'src/app/service/external/external.service';
 import { PlaceService } from 'src/app/service/place/place.service';
 
+import { Store } from '@ngrx/store';
+import * as userSelector from "../../store/user/user.selector";
+
 @Component({
   selector: 'app-user-home',
   templateUrl: './user-home.component.html',
   styleUrls: ['./user-home.component.css'],
 })
 export class UserHomeComponent {
-  constructor(private externalService: ExternalService, private placeService: PlaceService) {}
+  constructor(private externalService: ExternalService, private placeService: PlaceService, private store: Store) {}
 
   places: any = []
   latitude!: number 
@@ -19,6 +22,9 @@ export class UserHomeComponent {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.getLocationAndPlace()
+    this.store.select(userSelector.selectUserState).subscribe((response) => {
+      console.log('from store - ', response.user); 
+    })
   }
 
   getLocationAndPlace() {

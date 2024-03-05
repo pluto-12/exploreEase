@@ -15,5 +15,9 @@ export class GuideService {
     return this.http.post(`${environment.apigatewayUrl}/api-user/guide/resetpassword`, data)
   }
 
+  getGuideByPlace(place: string): Observable<any> {
+    return this.http.get(`${environment.apigatewayUrl}/api-user/guide/getguidebyplace?place=${place}`)
+  }
+
 
 }

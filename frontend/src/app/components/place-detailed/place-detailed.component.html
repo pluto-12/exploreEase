@@ -23,9 +23,10 @@
         <mat-card-content>
             <h3>Guide Availability</h3>
             <div class="guide-availability">
-                <mat-card  class="guide-card">
+                <mat-card  class="guide-card" *ngFor="let guide of guideDetails">
                     <mat-card-content>
-                        <p> Guide Name </p>
+                        <p>{{guide.guideName}}</p>
+                        <p>{{guide.guideEmail}}</p>
                         <p> Guide Rating: 5 </p>
                     </mat-card-content>
                 </mat-card>

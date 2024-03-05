@@ -20,11 +20,13 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatListModule } from "@angular/material/list";
+import { MatListModule } from '@angular/material/list';
 
 import { UserSignupComponent } from './components/user-signup/user-signup.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
+import { userReducer } from './store/user/user.reducer';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { OtpVerificationComponent } from './components/otp-verification/otp-verification.component';
 import { UserHomeComponent } from './components/user-home/user-home.component';
 import { CordinatorHomeComponent } from './components/cordinator-home/cordinator-home.component';
@@ -86,7 +88,8 @@ import { PlaceDetailedComponent } from './components/place-detailed/place-detail
     MatGridListModule,
     MatListModule,
     HttpClientModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot({userReducer: userReducer}),
+    StoreRouterConnectingModule.forRoot()
   ],
   providers: [
     {

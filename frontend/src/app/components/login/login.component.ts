@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, NavigationExtras } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { AuthService } from 'src/app/service/auth.service';
+import * as userSelector from '../../store/user/user.selector';
+import * as UserActions from '../../store/user/user.actions';
 
 declare var google: any;
 
@@ -17,7 +20,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {}
   ngOnInit() {
     const currentUrl = this.router.url;
@@ -28,7 +32,7 @@ export class LoginComponent implements OnInit {
           '733436264602-066te3maai7abfs2ch60v5qjc9rdhnug.apps.googleusercontent.com',
         callback: (response: any) => {
           console.log(response);
-          this.googlesignin(response.credential)
+          this.googlesignin(response.credential);
         },
       });
 
@@ -49,49 +53,67 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       const userEmail = this.loginForm.value.email;
       const userPassword = this.loginForm.value.password;
-      this.currentUrl = this.router.url
-      console.log(this.currentUrl);
+      this.currentUrl = this.router.url;
+      // console.log(this.currentUrl);
       if (this.currentUrl == '/user/login') {
-        this.authService.verifyUser(userEmail, userPassword).subscribe((response) => {
-            console.log(response);
+        this.authService
+          .verifyUser(userEmail, userPassword)
+          .subscribe((response) => {
+            // console.log('user login data - ', response.user);
             if (response.success) {
-              localStorage.setItem('jwt', response.token)
+              const user = {
+                id: response.user._id,
+                userEmail: response.user.userEmail,
+                userName: response.user.userName,
+                userNumber: response.user.userNumber,
+              };
+              this.store.dispatch(UserActions.addUser({ user: user }));
+              localStorage.setItem('jwt', response.token);
               this.router.navigateByUrl('/user/home');
             }
-        });
+          });
       } else if (this.currentUrl == '/cordinator/login') {
-        // console.log('here');        
-        this.authService.verifyCordinator(userEmail, userPassword).subscribe((response) => {
-          console.log(response);
-          if (response.success) {
-            localStorage.setItem('jwt', response.token)
-            this.router.navigateByUrl('/cordinator/home');
-          }
-        });
-      } else if (this.currentUrl == '/guide/login') {
-        this.authService.verifyGuide(userEmail, userPassword).subscribe((response) => {
-          console.log(response);
-          
-          if(response.success) {
-            localStorage.setItem('jwt', response.token)
-            if(response.user.passwordFlag) {
-              this.router.navigateByUrl('/guide/home')
-            } else {
-              const navigationExtras: NavigationExtras = {
-                queryParams: {'userEmail': userEmail}
-              }
-              this.router.navigate(['/guide/resetpassword'], navigationExtras)
+        // console.log('here');
+        this.authService
+          .verifyCordinator(userEmail, userPassword)
+          .subscribe((response) => {
+            console.log(response);
+            if (response.success) {
+              localStorage.setItem('jwt', response.token);
+              this.router.navigateByUrl('/cordinator/home');
             }
-          }
-        })
+          });
+      } else if (this.currentUrl == '/guide/login') {
+        this.authService
+          .verifyGuide(userEmail, userPassword)
+          .subscribe((response) => {
+            console.log(response);
+
+            if (response.success) {
+              localStorage.setItem('jwt', response.token);
+              if (response.user.passwordFlag) {
+                this.router.navigateByUrl('/guide/home');
+              } else {
+                const navigationExtras: NavigationExtras = {
+                  queryParams: { userEmail: userEmail },
+                };
+                this.router.navigate(
+                  ['/guide/resetpassword'],
+                  navigationExtras
+                );
+              }
+            }
+          });
       } else if (this.currentUrl == '/admin/login') {
-        this.authService.verifyAdmin(userEmail, userPassword).subscribe((response) => {
-          console.log(response);
-          if(response.success) {
-            localStorage.setItem('jwt', response.token)
-            this.router.navigateByUrl('/admin/home');
-          }
-        })
+        this.authService
+          .verifyAdmin(userEmail, userPassword)
+          .subscribe((response) => {
+            console.log(response);
+            if (response.success) {
+              localStorage.setItem('jwt', response.token);
+              this.router.navigateByUrl('/admin/home');
+            }
+          });
       }
     } else {
       // Mark form controls as touched to display validation errors
@@ -100,15 +122,13 @@ export class LoginComponent implements OnInit {
   }
 
   googlesignin(token: string) {
-    // console.log(token);  
+    // console.log(token);
     this.authService.googlesignin(token).subscribe((response) => {
-      console.log(response);  
-      if(response.success) {
-        localStorage.setItem('jwt', response.token)
+      console.log(response);
+      if (response.success) {
+        localStorage.setItem('jwt', response.token);
         this.router.navigateByUrl('/user/home');
-      }    
-    })
+      }
+    });
   }
-
-
 }

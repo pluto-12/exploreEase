@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { GuideService } from 'src/app/service/guide/guide.service';
 import { PlaceService } from 'src/app/service/place/place.service';
 
 @Component({
@@ -8,10 +9,11 @@ import { PlaceService } from 'src/app/service/place/place.service';
   styleUrls: ['./place-detailed.component.css'],
 })
 export class PlaceDetailedComponent {
-  constructor(private activatedRoute: ActivatedRoute, private placeService: PlaceService) {}
+  constructor(private activatedRoute: ActivatedRoute, private placeService: PlaceService, private guideService: GuideService) {}
   placeId!: number;
   placeImages: any = []
   placeDetails!: any
+  guideDetails!: any
 
 
   ngOnInit(): void {
@@ -22,8 +24,12 @@ export class PlaceDetailedComponent {
       this.placeId = params['id']
     });
     this.placeService.getPlaceById(this.placeId).subscribe((response) => {
-      console.log(response);
+      // console.log(response);
       this.placeDetails = response.place
+      this.guideService.getGuideByPlace(this.placeDetails.district).subscribe((response) => {
+        this.guideDetails = response.guideList
+        // console.log(this.guideDetails);  
+      })
     })
     this.placeService.getPlaceImageById(this.placeId).subscribe((response) => {
       console.log(response);   
@@ -33,5 +39,6 @@ export class PlaceDetailedComponent {
       }
       reader.readAsDataURL(response)  
     })
+    
   }
 }

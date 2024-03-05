@@ -105,6 +105,18 @@ const getGuideImage = async (req, res) => {
     }
 }
 
+const getGuideByPlace = async(req, res) => {
+    try {
+        const district = req.query.palce
+        const guideList = await guideCollection.find({ district })
+        console.log(guideList);
+        res.status(200).json({success: true, guideList})
+    }
+    catch (err) {
+        console.log('error at get guide by place - ', err);
+    }
+}
+
 module.exports = {
     addGuide,
     getguiderequest,
@@ -112,5 +124,6 @@ module.exports = {
     verifylogin,
     resetPassword,
     getAllGuides,
-    getGuideImage
+    getGuideImage,
+    getGuideByPlace
 }

@@ -51,5 +51,6 @@ guideRouter.post('/verifylogin', guideController.verifylogin)
 guideRouter.post('/resetpassword', guideController.resetPassword)
 guideRouter.get('/getallguides',validation.validateToken, guideController.getAllGuides)
 guideRouter.get('/getguideimage', validation.validateToken, guideController.getGuideImage)
+guideRouter.get('/getguidebyplace', validation.validateToken, guideController.getGuideByPlace)
 
 module.exports = guideRouter

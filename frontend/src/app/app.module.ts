@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,19 +30,19 @@ import { userReducer } from './store/user/user.reducer';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { OtpVerificationComponent } from './components/otp-verification/otp-verification.component';
 import { UserHomeComponent } from './components/user-home/user-home.component';
-import { CordinatorHomeComponent } from './components/cordinator-home/cordinator-home.component';
+import { CordinatorHomeComponent } from './components/cordinator/cordinator-home/cordinator-home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { GuideSignupComponent } from './components/guide-signup/guide-signup.component';
 import { HeaderInterceptor } from './interceptor/header.interceptor';
-import { GuideRequestsComponent } from './components/cordinator-home/guide-requests/guide-requests.component';
+import { GuideRequestsComponent } from './components/cordinator/guide-requests/guide-requests.component';
 import { ErrorInterceptor } from './interceptor/error.interceptor';
 import { GuideHomeComponent } from './components/guide-home/guide-home.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
-import { GuideListComponent } from './components/cordinator-home/guide-list/guide-list.component';
+import { GuideListComponent } from './components/cordinator/guide-list/guide-list.component';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 import { UserListComponent } from './components/admin-home/user-list/user-list.component';
 import { InfoDialogComponent } from './components/info-dialog/info-dialog.component';
-import { PlaceListComponent } from './components/cordinator-home/place-list/place-list.component';
+import { PlaceListComponent } from './components/cordinator/place-list/place-list.component';
 import { AddnewDialogComponent } from './components/addnew-dialog/addnew-dialog.component';
 import { PlaceDetailedComponent } from './components/place-detailed/place-detailed.component';
 
@@ -73,6 +74,7 @@ import { PlaceDetailedComponent } from './components/place-detailed/place-detail
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     BrowserAnimationsModule,
     MatCardModule,
     MatFormFieldModule,
@@ -88,8 +90,8 @@ import { PlaceDetailedComponent } from './components/place-detailed/place-detail
     MatGridListModule,
     MatListModule,
     HttpClientModule,
-    StoreModule.forRoot({userReducer: userReducer}),
-    StoreRouterConnectingModule.forRoot()
+    StoreModule.forRoot({ userReducer: userReducer }),
+    StoreRouterConnectingModule.forRoot(),
   ],
   providers: [
     {

@@ -86,6 +86,47 @@ const getPlaceImageById = async (req, res) => {
     }
 }
 
+const getPlaceBySearch = async (req, res) => {
+    try {
+        console.log('here');
+        const district = req.query.district
+        const lattitude = req.query.lattitude
+        const longitude = req.query.longitude 
+        const placeName = req.query.placename
+        let placeList = await placeCollection.find({ placeName })
+        if(placeList.length != 0) {
+            // console.log(placeList);
+        } else {
+            placeList = await placeCollection.find({ district })      
+        }
+        const placesWithDistance = placeList.map((place) => {
+            const distance = geolib.getDistance(
+                { latitude: req.query.lattitude, longitude: req.query.longitude },
+                { latitude: place.location.lattitude, longitude: place.location.longitude }
+            )
+            let imageUrl = null
+            let imagePath = path.join(__dirname, '../../assets/places', place.placeImage[0])
+            // console.log(imagePath);
+            imageUrl = `file://${imagePath}`
+            // console.log(imagePath);
+            return {
+                id: place._id,
+                location: place.location,
+                placeName: place.placeName,
+                placeDescription: place.placeDescription,
+                placeImage: imageUrl,
+                isActive: place.isActive,
+                distance: distance
+            }
+        })
+        placesWithDistance.sort((a, b) => a.distance - b.distance)
+        res.status(200).json({ success: true, placesWithDistance })
+    }
+    catch (err) {
+        console.log('err at get place by search -', err);
+    }
+}
+
 
 
 module.exports = {
@@ -93,5 +134,6 @@ module.exports = {
     showPlacesByDistrict,
     showAllPlaces,
     showPlaceById,
-    getPlaceImageById
+    getPlaceImageById,
+    getPlaceBySearch
 }

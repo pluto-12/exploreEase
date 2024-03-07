@@ -1,0 +1,38 @@
+<app-navbar></app-navbar>
+
+
+
+<div class="info-panel" layout="column" layout-align="center">
+    <form [formGroup]="itenaryForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Choose a Date" formControlName="itenaryDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Choose a District</mat-label>
+            <input matInput id="itenaryDistrict" formControlName="itenaryDistrict">
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit">Search</button>
+    </form>
+
+</div>
+
+<div layout="row" layout-align="center">
+    <div flex="50">
+        <mat-list>
+            <mat-list-item *ngFor="let place of places">
+                <h3 mat-line>{{ place.name }}</h3>
+                
+            </mat-list-item>
+        </mat-list>
+    </div><button mat-raised-button color="primary" (click)="addToFavorites(place)">Add</button>
+    <div flex="50" class="vertical-line">
+        <mat-list>
+            <mat-list-item *ngFor="let favorite of favorites">
+                <h3 mat-line>{{ favorite.name }}</h3>
+            </mat-list-item>
+        </mat-list>
+    </div>
+</div>

@@ -22,6 +22,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatListModule } from '@angular/material/list';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from "@angular/material/select";
 
 import { UserSignupComponent } from './components/user-signup/user-signup.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -45,6 +48,7 @@ import { InfoDialogComponent } from './components/info-dialog/info-dialog.compon
 import { PlaceListComponent } from './components/cordinator/place-list/place-list.component';
 import { AddnewDialogComponent } from './components/addnew-dialog/addnew-dialog.component';
 import { PlaceDetailedComponent } from './components/place-detailed/place-detailed.component';
+import { UserPlannerComponent } from './components/user-planner/user-planner.component';
 
 // import { NgxGooglePlacesAutocompleteModule } from "ngx-google-places-autocomplete";
 
@@ -69,6 +73,7 @@ import { PlaceDetailedComponent } from './components/place-detailed/place-detail
     PlaceListComponent,
     AddnewDialogComponent,
     PlaceDetailedComponent,
+    UserPlannerComponent,
   ],
   imports: [
     BrowserModule,
@@ -89,6 +94,9 @@ import { PlaceDetailedComponent } from './components/place-detailed/place-detail
     MatTooltipModule,
     MatGridListModule,
     MatListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
     HttpClientModule,
     StoreModule.forRoot({ userReducer: userReducer }),
     StoreRouterConnectingModule.forRoot(),

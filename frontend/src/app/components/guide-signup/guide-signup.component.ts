@@ -1,6 +1,6 @@
 import { Component, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/service/auth.service';
+import { AuthService } from 'src/app/service/auth/auth.service';
 
 declare var google: any;
 
@@ -56,7 +56,7 @@ export class GuideSignupComponent {
         placeName: this.placeName,
         latitude: this.latitude,
         longitude: this.longitude,
-        district: this.district
+        district: this.district,
       };
       console.log(guideEmail, guideName, dateOfBirth, location);
 
@@ -65,7 +65,6 @@ export class GuideSignupComponent {
       this.formData.append('dateOfBirth', dateOfBirth);
       this.formData.append('location', JSON.stringify(location));
       console.log(this.formData);
-      
 
       this.authService.requestGuide(this.formData).subscribe((response) => {
         console.log(response);

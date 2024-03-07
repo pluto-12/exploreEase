@@ -48,7 +48,37 @@ const guideSchema = new mongoose.Schema({
     passwordFlag: {
         type: Boolean,
         default: false
-    }
+    },
+    jobs: [{
+        date: {
+            type: Date,
+            required: true
+        },
+        customerId: {
+            type: String
+        },
+        places: [{
+            placeId: {
+                type: String
+            }
+        }],
+        isApproved: {
+            type: Boolean,
+            default: false
+        },
+        paymentStatus: {
+            type: Boolean,
+            default: false
+        }
+    }],
+    review: [{
+        rating: {
+            type: Number
+        },
+        reviewDescription: {
+            type: String
+        }
+    }]
 })
 
 const guideCollection = new mongoose.model('guidedetails', guideSchema)

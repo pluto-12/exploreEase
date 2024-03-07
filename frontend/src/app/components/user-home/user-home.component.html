@@ -1,12 +1,18 @@
 <app-navbar></app-navbar>
 <div class="container">
-    <div class="search-container">
-        <mat-form-field class="search-field" appearance="fill">
-          <input matInput placeholder="Search" id="searchText" (focus)="onInputFocus()" (blur)="onInputBlur()">
-          <button mat-button *ngIf="!isInputFocused" matSuffix mat-icon-button aria-label="Search">
-            <mat-icon>search</mat-icon>
-          </button>
-        </mat-form-field>
+    <div class="container flex justify-content-between items-center">
+        <div class="search-container ml-auto">
+            <mat-form-field class="search-field" appearance="fill">
+                <input matInput placeholder="Search" id="searchText" (focus)="onInputFocus()" (blur)="onInputBlur()">
+                <button mat-button *ngIf="!isInputFocused" matSuffix mat-icon-button aria-label="Search">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+
+        <button mat-raised-button color="orange" class="mr-auto" routerLink="/user/planner">
+            Start Planning
+        </button>
     </div>
     <mat-card class="places-container" *ngFor="let place of places;">
         <a routerLink="/user/place" [queryParams]="{'id': place.id}">

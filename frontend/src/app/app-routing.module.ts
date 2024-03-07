@@ -15,6 +15,7 @@ import { PlaceDetailedComponent } from './components/place-detailed/place-detail
 import { PlaceListComponent } from './components/cordinator/place-list/place-list.component';
 import { GuideListComponent } from './components/cordinator/guide-list/guide-list.component';
 import { GuideRequestsComponent } from './components/cordinator/guide-requests/guide-requests.component';
+import { UserPlannerComponent } from './components/user-planner/user-planner.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -41,6 +42,7 @@ const routes: Routes = [
   { path: 'admin/login', component: LoginComponent },
   { path: 'admin/home', component: AdminHomeComponent },
   { path: 'user/place', component: PlaceDetailedComponent },
+  { path: 'user/planner', component: UserPlannerComponent, canActivate: [authGuard]}
 ];
 
 @NgModule({

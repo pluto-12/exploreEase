@@ -1,38 +1,74 @@
 <app-navbar></app-navbar>
 
+<div class="contianer">
+    <div class="form-panel">
+        <form [formGroup]="itenaryForm" (ngSubmit)="onSubmit()">
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Choose a Date" formControlName="itenaryDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Choose a District</mat-label>
+                <input matInput id="itenaryDistrict" formControlName="itenaryDistrict">
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="vertical-line"></div>
+
+    <div class="places-panel">
+        <div class="places-container" *ngIf="places && places.length > 0; else noPlaces">
+            <h1>Places Nearby</h1>
+            <mat-card class="place-card" *ngFor="let place of places">
+                <a routerLink="/user/place" [queryParams]="{'id': place.id}">
+                    <mat-card-header>
+                        <mat-card-title>{{ place.placeName }}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <mat-grid-list cols="2" rowHeight="1:1">
+                            <mat-grid-tile>
+                                <img mat-card-image [src]="place.placeImage" alt="{{ place.placeName }}">
+                            </mat-grid-tile>
+                            <mat-grid-tile>
+                                <p>{{ place.placeDescription }}</p>
+                            </mat-grid-tile>
+                        </mat-grid-list>
+                    </mat-card-content>
+                </a>
+                <button mat-raised-button color="primary" (click)="addToItenary(place.id)">Add</button>
+            </mat-card>
+        </div>
+        <ng-template #noPlaces>
+            <p>choose district and date</p>
+        </ng-template>
 
 
-<div class="info-panel" layout="column" layout-align="center">
-    <form [formGroup]="itenaryForm" (ngSubmit)="onSubmit()">
-        <mat-form-field>
-            <input matInput [matDatepicker]="picker" placeholder="Choose a Date" formControlName="itenaryDate">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Choose a District</mat-label>
-            <input matInput id="itenaryDistrict" formControlName="itenaryDistrict">
-        </mat-form-field>
 
-        <button mat-raised-button color="primary" type="submit">Search</button>
-    </form>
-
-</div>
-
-<div layout="row" layout-align="center">
-    <div flex="50">
-        <mat-list>
-            <mat-list-item *ngFor="let place of places">
-                <h3 mat-line>{{ place.name }}</h3>
-                
-            </mat-list-item>
-        </mat-list>
-    </div><button mat-raised-button color="primary" (click)="addToFavorites(place)">Add</button>
-    <div flex="50" class="vertical-line">
-        <mat-list>
-            <mat-list-item *ngFor="let favorite of favorites">
-                <h3 mat-line>{{ favorite.name }}</h3>
-            </mat-list-item>
-        </mat-list>
+        <div class="places-container" *ngIf="itenaryPlaces && itenaryPlaces.length > 0; else noItenaryPlaces">
+            <h1>Your Itenary</h1>
+            <button mat-raised-button color="primary" (click)="saveItenary()">Save</button>
+            <mat-card class="place-card" *ngFor="let place of itenaryPlaces">
+                <a routerLink="/user/place" [queryParams]="{'id': place.id}">
+                    <mat-card-header>
+                        <mat-card-title>{{ place.placeName }}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <mat-grid-list cols="2" rowHeight="1:1">
+                            <mat-grid-tile>
+                                <img mat-card-image [src]="place.placeImage" alt="{{ place.placeName }}">
+                            </mat-grid-tile>
+                            <mat-grid-tile>
+                                <p>{{ place.placeDescription }}</p>
+                            </mat-grid-tile>
+                        </mat-grid-list>
+                    </mat-card-content>
+                </a>
+            </mat-card>
+        </div>
+        <ng-template #noItenaryPlaces>
+            <p>add places to the itenary</p>
+        </ng-template>
     </div>
 </div>

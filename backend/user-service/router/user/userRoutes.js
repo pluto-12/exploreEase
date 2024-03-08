@@ -7,5 +7,6 @@ userRouter.get('/verifymail', userController.verifyEmail)
 userRouter.post('/googlesignin', userController.googleSignin)
 userRouter.post('/verifylogin', userController.verifylogin)
 userRouter.get('/getallusers', userController.getAllUsers)
+userRouter.post('/saveitenary', userController.saveitenary)
 
 module.exports = userRouter

@@ -27,30 +27,26 @@ const userSchema = new mongoose.Schema({
     },
     itenaries: [
         {
-            name: {
-                type: String,
-                required: true
-            },
+            // name: {
+            //     type: String,
+            //     required: true
+            // },
             date: {
                 type: Date,
                 required: true
             },
-            places: [{
-                placeId: {
-                    type: String
-                }
-            }],
+            placesId: {
+                type: [String]
+            },
             guide: {
                 guideId: {
                     type: String
                 },
                 guideApproved: {
                     type: Boolean,
-                    default: false
                 },
                 paymentCompleted: {
                     type: Boolean,
-                    default: false
                 }
             },
             isCompleted: {

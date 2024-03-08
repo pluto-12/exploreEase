@@ -13,6 +13,9 @@
         <button mat-raised-button color="orange" class="mr-auto" routerLink="/user/planner">
             Start Planning
         </button>
+        <button mat-raised-button color="orange" class="mr-auto" routerLink="/user/itenary">
+            Your Itenaries
+        </button>
     </div>
     <mat-card class="places-container" *ngFor="let place of places;">
         <a routerLink="/user/place" [queryParams]="{'id': place.id}">
@@ -30,6 +33,5 @@
                 </mat-grid-list>
             </mat-card-content>
         </a>
-
     </mat-card>
 </div>

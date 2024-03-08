@@ -6,6 +6,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { PlaceService } from 'src/app/service/place/place.service';
+import { Store } from '@ngrx/store';
+import * as userSelector from '../../store/user/user.selector';
+import { UserService } from 'src/app/service/user/user.service';
+import { Router } from '@angular/router';
 
 declare var google: any;
 
@@ -22,9 +26,17 @@ export class UserPlannerComponent {
   latitude: any;
   longitude: any;
   district!: string;
-  places: any = []
+  places: any = [];
+  itenaryPlaces: any = [];
 
-  constructor(private fb: FormBuilder, private zone: NgZone, private placeService: PlaceService) {}
+  constructor(
+    private fb: FormBuilder,
+    private zone: NgZone,
+    private placeService: PlaceService,
+    private store: Store,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -40,9 +52,15 @@ export class UserPlannerComponent {
     if (this.itenaryForm.valid) {
       this.itenaryDate = this.itenaryForm.value.itenaryDate;
       console.log(this.itenaryDate, this.itenaryDistrict);
-      this.placeService.getPlacesByLocation(this.itenaryDistrict, this.latitude, this.longitude).subscribe((response) => {
-        this.places = response.placesWithDistance
-      })
+      this.placeService
+        .getPlacesByLocation(
+          this.itenaryDistrict,
+          this.latitude,
+          this.longitude
+        )
+        .subscribe((response) => {
+          this.places = response.placesWithDistance;
+        });
     }
   }
 
@@ -77,5 +95,27 @@ export class UserPlannerComponent {
     } else {
       console.error('Location input element not found');
     }
+  }
+
+  addToItenary(placeId: string) {
+    console.log(placeId);
+    const place = this.places.find((item: any) => item.id == placeId);
+    this.itenaryPlaces.push(place);
+  }
+
+  saveItenary() {
+    const itenaryPlacesId = this.itenaryPlaces.map((item: any) => item.id);
+    this.store.select(userSelector.selectUserState).subscribe((response) => {
+      console.log(response.user?.id);
+      const id = response.user?.id
+      console.log('userid',id);
+      this.userService.saveItenary(id, itenaryPlacesId, this.itenaryDate).subscribe((response) => {
+        console.log(response);
+        if(response.success) {
+          this.router.navigateByUrl('/user/itenary')
+        } 
+      })
+    });
+    
   }
 }

@@ -49,6 +49,8 @@ import { PlaceListComponent } from './components/cordinator/place-list/place-lis
 import { AddnewDialogComponent } from './components/addnew-dialog/addnew-dialog.component';
 import { PlaceDetailedComponent } from './components/place-detailed/place-detailed.component';
 import { UserPlannerComponent } from './components/user-planner/user-planner.component';
+import { UserItenariesComponent } from './components/user-itenaries/user-itenaries.component';
+import { UserItenariesDetailedComponent } from './components/user-itenaries-detailed/user-itenaries-detailed.component';
 
 // import { NgxGooglePlacesAutocompleteModule } from "ngx-google-places-autocomplete";
 
@@ -74,6 +76,8 @@ import { UserPlannerComponent } from './components/user-planner/user-planner.com
     AddnewDialogComponent,
     PlaceDetailedComponent,
     UserPlannerComponent,
+    UserItenariesComponent,
+    UserItenariesDetailedComponent,
   ],
   imports: [
     BrowserModule,

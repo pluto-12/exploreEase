@@ -82,7 +82,7 @@ export class GuideSignupComponent {
 
     if (locationInput) {
       this.autoComplete = new google.maps.places.Autocomplete(locationInput, {
-        types: ['establishment'],
+        types: ['administrative_area_level_3'],
         componentRestrictions: { country: ['IN'] },
         // fields: ['place_id', 'geometry', 'name'],
       });

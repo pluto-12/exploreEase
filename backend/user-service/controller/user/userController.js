@@ -136,14 +136,45 @@ const saveitenary = async (req, res) => {
         const placeId = req.body.placeId
         const date = req.body.date
         const userId = req.body.userId
-        const itenaryData = { date: new Date(date), placesId: placeId }
+        const district = req.body.district
+        const itenaryData = { date: new Date(date), district, placesId: placeId }
         console.log(itenaryData);
         const result = await userCollection.updateOne({ _id: new ObjectId(userId) }, { $push: { itenaries: itenaryData } })
         // console.log(result);
-        res.status(200).json({success: true})
+        res.status(200).json({ success: true })
     }
     catch (error) {
         console.log('error at save itenary - ', error);
+    }
+}
+
+getItenaryByUserId = async (req, res) => {
+    try {
+        const userId = req.query.userid
+        const itenary = await userCollection.find({ _id: new ObjectId(userId) }, { itenaries: 1 }).lean()
+        // console.log(itenary[0].itenaries);
+        const itenaryDetails = itenary[0].itenaries
+        res.status(200).json({ itenaryDetails })
+    } catch (err) {
+        console.log('error at get itenary by user id- ', err);
+    }
+}
+
+addGuideToItenary = async (req, res) => {
+    try {
+        console.log('here');
+        const { itenaryId, userId, guideId } = req.body
+        const guideDetails = {
+            guideId: guideId,
+            guideApproved: false,
+            paymentCompleted: false
+        };
+        const user = await userCollection.findOneAndUpdate({ _id: userId, 'itenaries._id': itenaryId },{ $set: { 'itenaries.$.guide': guideDetails } }, { new: true }).exec();
+        console.log(user);
+        res.status(200).json({success: true})
+    }
+    catch (err) {
+        console.log('addGuideToItenary- ', err);
     }
 }
 
@@ -154,5 +185,7 @@ module.exports = {
     googleSignin,
     verifylogin,
     getAllUsers,
-    saveitenary
+    saveitenary,
+    getItenaryByUserId,
+    addGuideToItenary
 }

@@ -18,6 +18,11 @@ import { GuideRequestsComponent } from './components/cordinator/guide-requests/g
 import { UserPlannerComponent } from './components/user-planner/user-planner.component';
 import { UserItenariesComponent } from './components/user-itenaries/user-itenaries.component';
 import { UserItenariesDetailedComponent } from './components/user-itenaries-detailed/user-itenaries-detailed.component';
+import { GuideComponent } from './components/guide/guide.component';
+import { GuideProfileComponent } from './components/guide/guide-profile/guide-profile.component';
+import { GuideReviewsComponent } from './components/guide/guide-reviews/guide-reviews.component';
+import { GuideJobsComponent } from './components/guide/guide-jobs/guide-jobs.component';
+import { GuideJobrequestsComponent } from './components/guide/guide-jobrequests/guide-jobrequests.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -37,6 +42,17 @@ const routes: Routes = [
       { path: 'guiderequests', component: GuideRequestsComponent },
     ],
   },
+  {
+    path: 'guide/home',
+    component: GuideComponent,
+    children: [
+      { path: '', redirectTo: 'profile', pathMatch: 'full'},
+      { path: 'profile', component: GuideProfileComponent},
+      { path: 'reviews', component: GuideReviewsComponent},
+      { path: 'job', component: GuideJobsComponent}, 
+      { path: 'jobrequests', component: GuideJobrequestsComponent}
+    ]
+  },
   { path: 'guide/signup', component: GuideSignupComponent },
   { path: 'guide/login', component: LoginComponent },
   { path: 'guide/resetpassword', component: ResetPasswordComponent },
@@ -47,7 +63,6 @@ const routes: Routes = [
   { path: 'user/planner', component: UserPlannerComponent, canActivate: [authGuard]},
   { path: 'user/itenary', component: UserItenariesComponent},
   { path: 'user/itenary/place', component: UserItenariesDetailedComponent}
-
 ];
 
 @NgModule({

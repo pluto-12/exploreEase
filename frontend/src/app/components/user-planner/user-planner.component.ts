@@ -109,7 +109,7 @@ export class UserPlannerComponent {
       console.log(response.user?.id);
       const id = response.user?.id
       console.log('userid',id);
-      this.userService.saveItenary(id, itenaryPlacesId, this.itenaryDate).subscribe((response) => {
+      this.userService.saveItenary(id, itenaryPlacesId, this.itenaryDate, this.itenaryDistrict).subscribe((response) => {
         console.log(response);
         if(response.success) {
           this.router.navigateByUrl('/user/itenary')

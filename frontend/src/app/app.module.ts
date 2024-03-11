@@ -30,6 +30,7 @@ import { UserSignupComponent } from './components/user-signup/user-signup.compon
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { userReducer } from './store/user/user.reducer';
+import { guideReducer } from "./store/guide/guide.reducer";
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { OtpVerificationComponent } from './components/otp-verification/otp-verification.component';
 import { UserHomeComponent } from './components/user-home/user-home.component';
@@ -51,6 +52,14 @@ import { PlaceDetailedComponent } from './components/place-detailed/place-detail
 import { UserPlannerComponent } from './components/user-planner/user-planner.component';
 import { UserItenariesComponent } from './components/user-itenaries/user-itenaries.component';
 import { UserItenariesDetailedComponent } from './components/user-itenaries-detailed/user-itenaries-detailed.component';
+import { PlaceItenaryDialogComponent } from './components/place-itenary-dialog/place-itenary-dialog.component';
+import { ShowGuidesDialogComponent } from './components/show-guides-dialog/show-guides-dialog.component';
+import { GuideComponent } from './components/guide/guide.component';
+import { GuideProfileComponent } from './components/guide/guide-profile/guide-profile.component';
+import { GuideReviewsComponent } from './components/guide/guide-reviews/guide-reviews.component';
+import { GuideJobsComponent } from './components/guide/guide-jobs/guide-jobs.component';
+import { GuideJobrequestsComponent } from './components/guide/guide-jobrequests/guide-jobrequests.component';
+import { GuideNavbarComponent } from './components/guide/guide-navbar/guide-navbar.component';
 
 // import { NgxGooglePlacesAutocompleteModule } from "ngx-google-places-autocomplete";
 
@@ -78,6 +87,14 @@ import { UserItenariesDetailedComponent } from './components/user-itenaries-deta
     UserPlannerComponent,
     UserItenariesComponent,
     UserItenariesDetailedComponent,
+    PlaceItenaryDialogComponent,
+    ShowGuidesDialogComponent,
+    GuideComponent,
+    GuideProfileComponent,
+    GuideReviewsComponent,
+    GuideJobsComponent,
+    GuideJobrequestsComponent,
+    GuideNavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -102,7 +119,7 @@ import { UserItenariesDetailedComponent } from './components/user-itenaries-deta
     MatNativeDateModule,
     MatSelectModule,
     HttpClientModule,
-    StoreModule.forRoot({ userReducer: userReducer }),
+    StoreModule.forRoot({ userReducer: userReducer, guideReducer: guideReducer }),
     StoreRouterConnectingModule.forRoot(),
   ],
   providers: [

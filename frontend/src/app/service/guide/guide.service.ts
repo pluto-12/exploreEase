@@ -19,5 +19,25 @@ export class GuideService {
     return this.http.get(`${environment.apigatewayUrl}/api-user/guide/getguidebyplace?place=${place}`)
   }
 
+  getGuideByPlaceAndDate(district: any, date: any):Observable<any> {
+    return this.http.get(`${environment.apigatewayUrl}/api-user/guide/getguidebyplaceanddate?district=${district}&date=${date}`)
+  }
+
+  saveJob(jobData: any, guideId: string):Observable<any> {
+    console.log('jobData - ', jobData);
+    console.log('guide - ', guideId)
+    const data = {jobData, guideId}
+    return this.http.post(`${environment.apigatewayUrl}/api-user/guide/savejob`, data)
+  }
+
+  getJobsRequests(id: string):Observable<any> {
+    return this.http.get(`${environment.apigatewayUrl}/api-user/guide/getjobrequest?id=${id}`)
+  }
+
+  approveJob(guideId: any, jobId: any):Observable<any> {
+    console.log('in service - ', guideId);
+    
+    return this.http.get(`${environment.apigatewayUrl}/api-user/guide/approvejob?guideid=${guideId}&jobid=${jobId}`)
+  }
 
 }

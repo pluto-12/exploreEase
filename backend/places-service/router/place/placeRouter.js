@@ -22,6 +22,7 @@ placeRouter.get('/showallplaces', placeController.showAllPlaces)
 placeRouter.get('/getplacedetails', placeController.showPlaceById)
 placeRouter.get('/getplaceimage', placeController.getPlaceImageById)
 placeRouter.get('/search', placeController.getPlaceBySearch)
+placeRouter.post('/getplacebyid', placeController.getPlaceById)
 
 
 

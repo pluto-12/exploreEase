@@ -3,6 +3,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as UserActions from '../../store/user/user.actions';
+import * as GuideActions from '../../store/guide/guide.actions';
 
 
 @Component({
@@ -24,6 +25,8 @@ export class NavbarComponent {
       this.role = "cordinator"
     } else if (currentUrl.startsWith('/admin')) {
       this.role = "admin"
+    } else if (currentUrl.startsWith('/guide')) {
+      this.role = "guide"
     }
   }
 
@@ -32,6 +35,8 @@ export class NavbarComponent {
     const currentUrl = this.router.url
     if(currentUrl.startsWith('/user')) {
       this.store.dispatch(UserActions.clearUser())
+    } else if(currentUrl.startsWith('/guide')) {
+      this.store.dispatch(GuideActions.clearGuide())
     }
     localStorage.clear()
     this.router.navigateByUrl('')

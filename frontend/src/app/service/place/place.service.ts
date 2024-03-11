@@ -36,4 +36,8 @@ export class PlaceService {
   getPlacesBySearch(placeName: string, district: string, lattitude: number, longitude: number): Observable<any> {
     return this.http.get(`${environment.apigatewayUrl}/api-places/place/search?placename=${placeName}&district=${district}&lattitude=${lattitude}&longitude=${longitude}`)
   }
+
+  getPlaceDetailsByMultipleId(placesId: string[]):Observable<any> {
+    return this.http.post(`${environment.apigatewayUrl}/api-places/place/getplacebyid`, placesId)
+  }
 }

@@ -10,9 +10,18 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  saveItenary(userId: any,placeId: string[], date: Date):Observable<any> {
+  saveItenary(userId: any,placeId: string[], date: Date, district: string):Observable<any> {
     console.log(userId);
-    const data = {userId, placeId, date}
+    const data = {userId, district, placeId, date}
     return this.http.post(`${environment.apigatewayUrl}/api-user/user/saveitenary`, data)
+  }
+
+  getItenary(userId: any):Observable<any> {
+    return this.http.get(`${environment.apigatewayUrl}/api-user/user/getitenary?userid=${userId}`)
+  }
+
+  addGuideToItenary(itenaryId: any, userId:any, guideId: any):Observable<any> {
+    const data = {itenaryId, userId, guideId}
+    return this.http.post(`${environment.apigatewayUrl}/api-user/user/addguidetoitenary`, data)
   }
 }

@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken')
 const axios = require('axios')
 const path = require('path')
 const fs = require('fs').promises
+const mongoose = require('mongoose')
+const ObjectId = mongoose.Types.ObjectId
 
 
 const maxAge = 24 * 60 * 60
@@ -105,17 +107,60 @@ const getGuideImage = async (req, res) => {
     }
 }
 
-const getGuideByPlace = async(req, res) => {
+const getGuideByPlace = async (req, res) => {
     try {
         const district = req.query.palce
         const guideList = await guideCollection.find({ district })
         console.log(guideList);
-        res.status(200).json({success: true, guideList})
+        res.status(200).json({ success: true, guideList })
     }
     catch (err) {
         console.log('error at get guide by place - ', err);
     }
 }
+
+const getGuideByPlaceAndDate = async (req, res) => {
+    try {
+        const district = req.query.district
+        const date = req.query.date
+        const guides = await guideCollection.find({ 'location.district': district, 'jobs.date': { $ne: date } }).exec();
+        // console.log(guides);
+        res.status(200).json({ guides })
+    }
+    catch (err) {
+        console.log('error at get guide by place and date - ', err);
+    }
+}
+
+const saveJob = async (req, res) => {
+    // console.log(req.body);
+    const { jobData, guideId } = req.body
+    const newJob = await guideCollection.findOneAndUpdate({ _id: new ObjectId(guideId) }, { $push: { jobs: jobData } }, { new: true }).exec()
+    res.status(200).json({ success: true })
+}
+
+const getJobRequest = async (req, res) => {
+    const guideId = req.query.id
+    const jobRequest = await guideCollection.find({ _id: new ObjectId(guideId), 'jobs.isApproved': false }, { jobs: { $elemMatch: { isApproved: false } } })
+    // console.log(jobRequest[0].jobs);
+    if(jobRequest.length != 0) {
+        const jobRequests = jobRequest[0].jobs
+        res.status(200).json({ jobRequests })
+    } else {
+        res.status(200)
+    }
+    
+}
+
+const approveJob = async (req, res) => {
+    console.log('here');
+    const guideId = req.query.guideid
+    const jobId = req.query.jobid
+    console.log('ids',guideId, jobId);
+    const result = await guideCollection.updateOne({ _id: new ObjectId(guideId), 'jobs._id': new ObjectId(jobId) },{ $set: { 'jobs.$.isApproved': true } })
+    res.status(200).json({success: true})
+}
+
 
 module.exports = {
     addGuide,
@@ -125,5 +170,9 @@ module.exports = {
     resetPassword,
     getAllGuides,
     getGuideImage,
-    getGuideByPlace
+    getGuideByPlace,
+    getGuideByPlaceAndDate,
+    saveJob,
+    getJobRequest,
+    approveJob
 }

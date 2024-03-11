@@ -60,7 +60,7 @@ const showPlaceById = async (req, res) => {
         const id = req.query.id
         const placeDetails = await placeCollection.find({ _id: new ObjectId(id) })
         console.log(placeDetails);
-        res.status(200).json({place: placeDetails[0]})
+        res.status(200).json({ place: placeDetails[0] })
     }
     catch (err) {
         console.log('Error at show place by id - ', err);
@@ -74,7 +74,7 @@ const getPlaceImageById = async (req, res) => {
         // let placeImages = []
         let imagePath
         images[0].placeImage.forEach((image) => {
-            image = path.join(__dirname,'../../assets/places', image)
+            image = path.join(__dirname, '../../assets/places', image)
             // placeImages.push(image)
             imagePath = image
         });
@@ -91,13 +91,13 @@ const getPlaceBySearch = async (req, res) => {
         console.log('here');
         const district = req.query.district
         const lattitude = req.query.lattitude
-        const longitude = req.query.longitude 
+        const longitude = req.query.longitude
         const placeName = req.query.placename
         let placeList = await placeCollection.find({ placeName })
-        if(placeList.length != 0) {
+        if (placeList.length != 0) {
             // console.log(placeList);
         } else {
-            placeList = await placeCollection.find({ district })      
+            placeList = await placeCollection.find({ district })
         }
         const placesWithDistance = placeList.map((place) => {
             const distance = geolib.getDistance(
@@ -127,6 +127,30 @@ const getPlaceBySearch = async (req, res) => {
     }
 }
 
+const getPlaceById = async (req, res) => {
+    // console.log(req.body);
+    const id = req.body
+    // console.log(id);
+    const placeObjectId = id.map((placeId) => new ObjectId(placeId))
+    const places = await placeCollection.find({ _id: { $in: placeObjectId} })
+    let placeList = []
+    places.forEach((place) => {
+        let imageUrl = null
+        let imagePath = path.join(__dirname, '../../assets/places', place.placeImage[0])
+        // console.log(imagePath);
+        imageUrl = `file://${imagePath}`
+        placeList.push({
+            id: place._id,
+            location: place.location,
+            placeName: place.placeName,
+            placeDescription: place.placeDescription,
+            placeImage: imageUrl,
+            isActive: place.isActive,
+        })
+    })
+    res.status(200).json({placeList})
+}
+
 
 
 module.exports = {
@@ -135,5 +159,6 @@ module.exports = {
     showAllPlaces,
     showPlaceById,
     getPlaceImageById,
-    getPlaceBySearch
+    getPlaceBySearch,
+    getPlaceById
 }

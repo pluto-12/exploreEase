@@ -57,11 +57,9 @@ const guideSchema = new mongoose.Schema({
         customerId: {
             type: String
         },
-        places: [{
-            placeId: {
-                type: String
-            }
-        }],
+        placesId: {
+            type: [String]
+        },
         isApproved: {
             type: Boolean,
             default: false

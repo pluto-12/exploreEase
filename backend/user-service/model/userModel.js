@@ -35,6 +35,9 @@ const userSchema = new mongoose.Schema({
                 type: Date,
                 required: true
             },
+            district: {
+                type: String
+            },
             placesId: {
                 type: [String]
             },
@@ -44,9 +47,11 @@ const userSchema = new mongoose.Schema({
                 },
                 guideApproved: {
                     type: Boolean,
+                    default: false
                 },
                 paymentCompleted: {
                     type: Boolean,
+                    default: false
                 }
             },
             isCompleted: {

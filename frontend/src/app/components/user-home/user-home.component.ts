@@ -46,13 +46,26 @@ export class UserHomeComponent {
         this.longitude = position.coords.longitude;
         this.externalService.getPlaceName(this.latitude, this.longitude).then(
           (placeName: string) => {
-            console.log('User Location:', this.latitude, this.longitude);
-            console.log('Place Name:', placeName);
+            // console.log('User Location:', this.latitude, this.longitude);
+            // console.log('Place Name:', placeName);
             this.placeService
               .getPlacesByLocation(placeName, this.latitude, this.longitude)
               .subscribe((response) => {
-                console.log(response);
+                // console.log(response);
                 this.places = response.placesWithDistance;
+                console.log('places - ', this.places);
+                this.places.forEach((place: any) => {
+                  this.placeService
+                    .getPlaceImageById(place.id)
+                    .subscribe((response) => {
+                      console.log(response);
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        place.placeImage = reader.result as string;
+                      };
+                      reader.readAsDataURL(response);
+                    });
+                });
               });
           },
           (error) => {
@@ -65,7 +78,7 @@ export class UserHomeComponent {
       }
     );
   }
-  
+
   onInputFocus() {
     this.isInputFocused = true;
   }
@@ -105,16 +118,22 @@ export class UserHomeComponent {
             this.district = districtComponent
               ? districtComponent.long_name
               : null;
-            console.log('district-', this.district);
+            // console.log('district-', this.district);
           }
 
-          console.log('Selected Place:', this.placeName);
-          this.placeService.getPlacesBySearch(this.placeName, this.district, this.latitude, this.longitude).subscribe((response) => {
-            // console.log(response);
-            this.places = response.placesWithDistance;
-          })
+          // console.log('Selected Place:', this.placeName);
+          this.placeService
+            .getPlacesBySearch(
+              this.placeName,
+              this.district,
+              this.latitude,
+              this.longitude
+            )
+            .subscribe((response) => {
+              // console.log(response);
+              this.places = response.placesWithDistance;
+            });
         });
-
       });
     } else {
       console.error('Location input element not found');

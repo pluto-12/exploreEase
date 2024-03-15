@@ -6,6 +6,13 @@ const axios = require('axios')
 const jwkToPem = require('jwk-to-pem');
 const mongoose = require('mongoose')
 const ObjectId = mongoose.Types.ObjectId
+const Razorpay = require('razorpay')
+
+
+const razorpay = new Razorpay({
+    key_id: process.env.razorpayId,
+    key_secret: process.env.razorpaySecret
+})
 
 
 const getPublicKey = async (kid) => {
@@ -148,7 +155,7 @@ const saveitenary = async (req, res) => {
     }
 }
 
-getItenaryByUserId = async (req, res) => {
+const getItenaryByUserId = async (req, res) => {
     try {
         const userId = req.query.userid
         const itenary = await userCollection.find({ _id: new ObjectId(userId) }, { itenaries: 1 }).lean()
@@ -160,24 +167,39 @@ getItenaryByUserId = async (req, res) => {
     }
 }
 
-addGuideToItenary = async (req, res) => {
+const addGuideToItenary = async (req, res) => {
     try {
         console.log('here');
         const { itenaryId, userId, guideId } = req.body
         const guideDetails = {
             guideId: guideId,
-            guideApproved: false,
-            paymentCompleted: false
+            paymentCompleted: true
         };
-        const user = await userCollection.findOneAndUpdate({ _id: userId, 'itenaries._id': itenaryId },{ $set: { 'itenaries.$.guide': guideDetails } }, { new: true }).exec();
+        const user = await userCollection.findOneAndUpdate({ _id: userId, 'itenaries._id': itenaryId }, { $set: { 'itenaries.$.guide': guideDetails } }, { new: true }).exec();
         console.log(user);
-        res.status(200).json({success: true})
+        res.status(200).json({ success: true })
     }
     catch (err) {
         console.log('addGuideToItenary- ', err);
     }
 }
 
+const razorpayPayment = async (req, res) => {
+    const amount = req.body.amount
+    const currency = 'INR'
+    const options = {
+        amount: amount,
+        currency: currency
+    }
+    try {
+        const response = await razorpay.orders.create(options)
+        res.json(response)
+    }
+    catch (err) {
+        console.log('error at razorpay- ',err);
+        res.status(500).json({ error: err.message})
+    }
+}
 
 module.exports = {
     addUser,
@@ -187,5 +209,6 @@ module.exports = {
     getAllUsers,
     saveitenary,
     getItenaryByUserId,
-    addGuideToItenary
+    addGuideToItenary,
+    razorpayPayment
 }

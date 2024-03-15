@@ -60,6 +60,16 @@ export class UserPlannerComponent {
         )
         .subscribe((response) => {
           this.places = response.placesWithDistance;
+          this.places.forEach((place: any) => {
+            this.placeService.getPlaceImageById(place.id).subscribe((response) => {
+                console.log(response);
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                  place.placeImage = reader.result as string;
+                };
+                reader.readAsDataURL(response);
+              });
+          });
         });
     }
   }

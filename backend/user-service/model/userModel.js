@@ -45,13 +45,8 @@ const userSchema = new mongoose.Schema({
                 guideId: {
                     type: String
                 },
-                guideApproved: {
-                    type: Boolean,
-                    default: false
-                },
                 paymentCompleted: {
-                    type: Boolean,
-                    default: false
+                    type: Boolean
                 }
             },
             isCompleted: {

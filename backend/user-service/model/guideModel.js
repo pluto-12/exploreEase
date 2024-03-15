@@ -62,11 +62,11 @@ const guideSchema = new mongoose.Schema({
         },
         isApproved: {
             type: Boolean,
-            default: false
+            default: true
         },
         paymentStatus: {
             type: Boolean,
-            default: false
+            default: true
         }
     }],
     review: [{

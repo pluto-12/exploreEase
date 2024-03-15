@@ -4,7 +4,7 @@ import { GuideService } from 'src/app/service/guide/guide.service';
 import { Store } from '@ngrx/store';
 import * as userSelector from '../../store/user/user.selector';
 import { UserService } from 'src/app/service/user/user.service';
-
+declare var Razorpay: any;
 @Component({
   selector: 'app-show-guides-dialog',
   templateUrl: './show-guides-dialog.component.html',
@@ -14,6 +14,7 @@ export class ShowGuidesDialogComponent {
   itenary: any;
   date!: Date;
   guideList: any;
+  paymentId!: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -51,4 +52,39 @@ export class ShowGuidesDialogComponent {
       });
     });
   }
+
+  intiatePayment(guideId: string) {
+    const paymentData = { amount: 100000 };
+    this.guideService.guidePayment(paymentData).subscribe((response) => {
+      this.paymentId = response.id;
+      this.payWithRazorpay(response, guideId);
+    });
+  }
+
+  payWithRazorpay(orderData: any, guideId: string) {
+    const options = {
+      key: orderData.key_id,
+      amount: orderData.amount,
+      currency: 'INR',
+      name: 'ExploreEase',
+      description: 'Advance payment for guide from ExploreEase',
+      order_id: orderData.id,
+      handler: (response: any) => {
+        // Handle payment success
+        console.log(response);
+        // this.paymentCompletion(guideId)
+        this.hireGuide(guideId)
+      },
+      prefill: {
+        name: 'Test User',
+        email: 'test@example.com',
+      },
+      theme: {
+        color: '#3399cc',
+      },
+    };
+    const rzp = new Razorpay(options);
+    rzp.open();
+  }
+
 }

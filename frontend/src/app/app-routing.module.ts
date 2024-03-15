@@ -61,7 +61,7 @@ const routes: Routes = [
   { path: 'admin/home', component: AdminHomeComponent },
   { path: 'user/place', component: PlaceDetailedComponent },
   { path: 'user/planner', component: UserPlannerComponent, canActivate: [authGuard]},
-  { path: 'user/itenary', component: UserItenariesComponent},
+  { path: 'user/itenary', component: UserItenariesComponent, canActivate: [authGuard]},
   { path: 'user/itenary/place', component: UserItenariesDetailedComponent}
 ];
 

@@ -36,8 +36,11 @@ export class GuideService {
 
   approveJob(guideId: any, jobId: any):Observable<any> {
     console.log('in service - ', guideId);
-    
     return this.http.get(`${environment.apigatewayUrl}/api-user/guide/approvejob?guideid=${guideId}&jobid=${jobId}`)
+  }
+
+  guidePayment(data: any):Observable<any> {
+    return this.http.post(`${environment.apigatewayUrl}/api-user/user/payment`, data)
   }
 
 }

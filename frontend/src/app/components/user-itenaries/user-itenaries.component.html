@@ -11,9 +11,9 @@
         </mat-card-content>
         <mat-card-actions>
             <button mat-button (click)="showItenaryPlaces(item._id)">Show Places</button>
-            <button mat-button *ngIf="!item.guide" (click)="hireGuide(item._id)">Guide Availability</button>
-            <button *ngIf="item.guide && !item.guide.guideApproved">Guide Status - Pending</button>
-            <button *ngIf="item.guide && item.guide.guideApproved" (click)="guidePayment()">Make Payment</button>
+            <!-- <button mat-button *ngIf="!item.guide" (click)="hireGuide(item._id)">Guide Availability</button> -->
+            <button *ngIf="item.guide && !item.guide.paymentCompleted || !item.guide" (click)="hireGuide(item._id)">Hire Guide</button>
+            <button *ngIf="item.guide && item.guide.paymentCompleted" (click)="guidePayment()">Chat with Guide</button>
         </mat-card-actions>
     </mat-card>
 </div>

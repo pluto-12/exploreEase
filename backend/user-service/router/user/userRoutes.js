@@ -10,5 +10,6 @@ userRouter.get('/getallusers', userController.getAllUsers)
 userRouter.post('/saveitenary', userController.saveitenary)
 userRouter.get('/getitenary', userController.getItenaryByUserId)
 userRouter.post('/addguidetoitenary', userController.addGuideToItenary)
+userRouter.post('/payment', userController.razorpayPayment)
 
 module.exports = userRouter

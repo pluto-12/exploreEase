@@ -130,9 +130,10 @@ const getPlaceBySearch = async (req, res) => {
 const getPlaceById = async (req, res) => {
     // console.log(req.body);
     const id = req.body
-    // console.log(id);
+    console.log(id);
     const placeObjectId = id.map((placeId) => new ObjectId(placeId))
-    const places = await placeCollection.find({ _id: { $in: placeObjectId} })
+    const places = await placeCollection.find({ _id: { $in: placeObjectId } })
+    console.log('here',places);
     let placeList = []
     places.forEach((place) => {
         let imageUrl = null
@@ -148,7 +149,20 @@ const getPlaceById = async (req, res) => {
             isActive: place.isActive,
         })
     })
-    res.status(200).json({placeList})
+    res.status(200).json({ placeList })
+}
+
+const addReview = async (req, res) => {
+    try {
+        const { userId, placeId, rating, review } = req.body
+        const updatedPlace = await placeCollection.findOneAndUpdate({ _id: new ObjectId(placeId) }, { $push: { reviews: { userId, review, rating } } },{new: true})
+        if(updatedPlace) {
+            res.json(200).json({success: true})
+        }
+    }
+    catch(err) {
+        console.log('error at add review - ', err);
+    } 
 }
 
 
@@ -160,5 +174,6 @@ module.exports = {
     showPlaceById,
     getPlaceImageById,
     getPlaceBySearch,
-    getPlaceById
+    getPlaceById,
+    addReview
 }

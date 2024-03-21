@@ -30,7 +30,18 @@ const placeSchema = new mongoose.Schema({
     isActive: {
         type: Boolean,
         default: true
-    }
+    },
+    reviews: [{
+        userId: {
+            type: String
+        },
+        review: {
+            type: String
+        },
+        rating: {
+            type: Number
+        }
+    }]
 })
 
 const placeCollection = new mongoose.model('placedetails', placeSchema)

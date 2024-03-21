@@ -7,6 +7,7 @@ const jwkToPem = require('jwk-to-pem');
 const mongoose = require('mongoose')
 const ObjectId = mongoose.Types.ObjectId
 const Razorpay = require('razorpay')
+const guideCollection = require('../../model/guideModel')
 
 
 const razorpay = new Razorpay({
@@ -196,8 +197,27 @@ const razorpayPayment = async (req, res) => {
         res.json(response)
     }
     catch (err) {
-        console.log('error at razorpay- ',err);
-        res.status(500).json({ error: err.message})
+        console.log('error at razorpay- ', err);
+        res.status(500).json({ error: err.message })
+    }
+}
+
+const getGuide = async (req, res) => {
+    try {
+        const userId = req.query.userid
+        const itenaryId = req.query.itenaryid
+        const user = await userCollection.findOne({ _id: new ObjectId(userId), "itenaries._id": itenaryId },{ "itenaries.$": 1 });
+        // console.log('user- ', user);
+        const itinerary = user.itenaries[0];
+        const guideId = itinerary.guide.guideId;
+        // console.log('guideID - ',guideId);
+        const guideDetails = await guideCollection.find({_id: new ObjectId(guideId)})
+        console.log(guideDetails);
+        res.status(200).json({success: true, guideDetails})
+
+    }
+    catch (err) {
+        console.log('error at getGuide- ', err.message);
     }
 }
 
@@ -210,5 +230,6 @@ module.exports = {
     saveitenary,
     getItenaryByUserId,
     addGuideToItenary,
-    razorpayPayment
+    razorpayPayment, 
+    getGuide
 }

@@ -54,7 +54,7 @@ guideRouter.get('/getguideimage', validation.validateToken, guideController.getG
 guideRouter.get('/getguidebyplace', validation.validateToken, guideController.getGuideByPlace)
 guideRouter.get('/getguidebyplaceanddate', guideController.getGuideByPlaceAndDate)
 guideRouter.post('/savejob', guideController.saveJob)
-guideRouter.get('/getjobrequest', guideController.getJobRequest)
+guideRouter.get('/getjobs', guideController.getJobRequest)
 guideRouter.get('/approvejob', guideController.approveJob)
 
 module.exports = guideRouter

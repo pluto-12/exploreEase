@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PlaceItenaryDialogComponent } from '../place-itenary-dialog/place-itenary-dialog.component';
 import { GuideService } from 'src/app/service/guide/guide.service';
 import { ShowGuidesDialogComponent } from '../show-guides-dialog/show-guides-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-itenaries',
@@ -22,13 +23,14 @@ export class UserItenariesComponent {
     private placeService: PlaceService,
     private store: Store,
     private dialog: MatDialog,
-    private guideService: GuideService
+    private guideService: GuideService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.getItenaries()
+    this.getItenaries();
   }
 
   getItenaries() {
@@ -80,16 +82,21 @@ export class UserItenariesComponent {
         itenary = element;
       }
     });
-    this.guideService.getGuideByPlaceAndDate(district, date).subscribe((response) => {
+    this.guideService
+      .getGuideByPlaceAndDate(district, date)
+      .subscribe((response) => {
         const dialogRef = this.dialog.open(ShowGuidesDialogComponent, {
           width: '500px',
           data: { guideList: response.guides, itenary, date },
         });
         dialogRef.afterClosed().subscribe((response) => {
-          this.getItenaries()
+          this.getItenaries();
         });
-    });
+      });
   }
 
-  guidePayment() {}
+  chat(itenaryId: string) {
+    console.log(itenaryId);
+    this.router.navigate(['/user/chat'], {queryParams: {id: itenaryId}});
+  }
 }

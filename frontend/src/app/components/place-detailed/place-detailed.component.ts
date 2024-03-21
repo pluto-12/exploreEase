@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GuideService } from 'src/app/service/guide/guide.service';
 import { PlaceService } from 'src/app/service/place/place.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AddReviewDialogComponent } from '../add-review-dialog/add-review-dialog.component';
 
 @Component({
   selector: 'app-place-detailed',
@@ -9,7 +11,7 @@ import { PlaceService } from 'src/app/service/place/place.service';
   styleUrls: ['./place-detailed.component.css'],
 })
 export class PlaceDetailedComponent {
-  constructor(private activatedRoute: ActivatedRoute, private placeService: PlaceService, private guideService: GuideService) {}
+  constructor(private activatedRoute: ActivatedRoute, private placeService: PlaceService, private guideService: GuideService, private dialog: MatDialog) {}
   placeId!: number;
   placeImages: any = []
   placeDetails!: any
@@ -40,5 +42,13 @@ export class PlaceDetailedComponent {
       reader.readAsDataURL(response)  
     })
     
+  }
+
+  addReviews() {
+    const dialogRef = this.dialog.open(AddReviewDialogComponent,{
+      width: '500px',
+      data: this.placeId
+    })
+    dialogRef.afterClosed().subscribe((response) => {})
   }
 }

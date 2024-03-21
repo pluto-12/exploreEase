@@ -18,6 +18,7 @@ app.use((req, res, next) => {
 app.use('/api-user', proxy('http://localhost:3001'))
 app.use('/api-otp', proxy('http://localhost:3002'))
 app.use('/api-places', proxy('http://localhost:3003'))
+app.use('/api-chat', proxy('http://localhost:3003'))
 
 app.listen(process.env.port, () => {
     console.log(`Server running at http://localhost:${process.env.port}`);

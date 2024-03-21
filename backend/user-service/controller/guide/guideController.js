@@ -141,7 +141,7 @@ const saveJob = async (req, res) => {
 
 const getJobRequest = async (req, res) => {
     const guideId = req.query.id
-    const jobRequest = await guideCollection.find({ _id: new ObjectId(guideId), 'jobs.isApproved': false }, { jobs: { $elemMatch: { isApproved: false } } })
+    const jobRequest = await guideCollection.find({ _id: new ObjectId(guideId), 'jobs.isApproved': true }, { jobs: { $elemMatch: { isApproved: true } } })
     // console.log(jobRequest[0].jobs);
     if(jobRequest.length != 0) {
         const jobRequests = jobRequest[0].jobs

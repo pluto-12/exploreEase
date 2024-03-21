@@ -23,6 +23,7 @@ import { GuideProfileComponent } from './components/guide/guide-profile/guide-pr
 import { GuideReviewsComponent } from './components/guide/guide-reviews/guide-reviews.component';
 import { GuideJobsComponent } from './components/guide/guide-jobs/guide-jobs.component';
 import { GuideJobrequestsComponent } from './components/guide/guide-jobrequests/guide-jobrequests.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -62,7 +63,8 @@ const routes: Routes = [
   { path: 'user/place', component: PlaceDetailedComponent },
   { path: 'user/planner', component: UserPlannerComponent, canActivate: [authGuard]},
   { path: 'user/itenary', component: UserItenariesComponent, canActivate: [authGuard]},
-  { path: 'user/itenary/place', component: UserItenariesDetailedComponent}
+  { path: 'user/itenary/place', component: UserItenariesDetailedComponent},
+  { path: 'user/chat', component: ChatComponent}
 ];
 
 @NgModule({

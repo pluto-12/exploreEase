@@ -60,6 +60,8 @@ import { GuideReviewsComponent } from './components/guide/guide-reviews/guide-re
 import { GuideJobsComponent } from './components/guide/guide-jobs/guide-jobs.component';
 import { GuideJobrequestsComponent } from './components/guide/guide-jobrequests/guide-jobrequests.component';
 import { GuideNavbarComponent } from './components/guide/guide-navbar/guide-navbar.component';
+import { ChatComponent } from './components/chat/chat.component';
+import { AddReviewDialogComponent } from './components/add-review-dialog/add-review-dialog.component';
 
 // import { NgxGooglePlacesAutocompleteModule } from "ngx-google-places-autocomplete";
 
@@ -95,6 +97,8 @@ import { GuideNavbarComponent } from './components/guide/guide-navbar/guide-navb
     GuideJobsComponent,
     GuideJobrequestsComponent,
     GuideNavbarComponent,
+    ChatComponent,
+    AddReviewDialogComponent,
   ],
   imports: [
     BrowserModule,

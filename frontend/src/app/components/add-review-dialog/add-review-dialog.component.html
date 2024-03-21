@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Add New Review</h2>
+<div mat-dialog-content>
+    <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()">
+        <label for="rating">Rating:</label>
+        <mat-form-field appearance="fill">
+            <mat-label>Rating</mat-label>
+            <mat-select formControlName="rating">
+                <mat-option value="1">1</mat-option>
+                <mat-option value="2">2</mat-option>
+                <mat-option value="3">3</mat-option>
+                <mat-option value="4">4</mat-option>
+                <mat-option value="5">5</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-divider></mat-divider>
+        <label for="review">Review:</label>
+        <mat-form-field appearance="fill">
+            <mat-label>Review</mat-label>
+            <input matInput id="review" formControlName="review">
+        </mat-form-field>
+        <mat-divider></mat-divider>
+        <button mat-raised-button color="primary" type="submit">Add</button>
+        <button mat-raised-button mat-dialog-close>Cancel</button>
+    </form>
+</div>

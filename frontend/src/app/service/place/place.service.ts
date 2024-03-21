@@ -40,4 +40,9 @@ export class PlaceService {
   getPlaceDetailsByMultipleId(placesId: string[]):Observable<any> {
     return this.http.post(`${environment.apigatewayUrl}/api-places/place/getplacebyid`, placesId)
   }
+
+  addReview(userId: string,placeId: string, rating: number, review: string): Observable<any> {
+    const data = {userId, placeId,  rating, review}
+    return this.http.post(`${environment.apigatewayUrl}/api-places/place/addreview`, data)
+  }
 }

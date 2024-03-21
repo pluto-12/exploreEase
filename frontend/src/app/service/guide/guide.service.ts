@@ -30,8 +30,8 @@ export class GuideService {
     return this.http.post(`${environment.apigatewayUrl}/api-user/guide/savejob`, data)
   }
 
-  getJobsRequests(id: string):Observable<any> {
-    return this.http.get(`${environment.apigatewayUrl}/api-user/guide/getjobrequest?id=${id}`)
+  getJobs(id: string):Observable<any> {
+    return this.http.get(`${environment.apigatewayUrl}/api-user/guide/getjobs?id=${id}`)
   }
 
   approveJob(guideId: any, jobId: any):Observable<any> {

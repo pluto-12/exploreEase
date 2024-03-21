@@ -24,4 +24,8 @@ export class UserService {
     const data = {itenaryId, userId, guideId}
     return this.http.post(`${environment.apigatewayUrl}/api-user/user/addguidetoitenary`, data)
   }
+
+  getGuideId(userId: any, itenaryId: string): Observable<any> {
+    return this.http.get(`${environment.apigatewayUrl}/api-user/user/getguide?userid=${userId}&itenaryid=${itenaryId}`)
+  } 
 }

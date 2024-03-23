@@ -43,4 +43,8 @@ export class GuideService {
     return this.http.post(`${environment.apigatewayUrl}/api-user/user/payment`, data)
   }
 
+  getGuideById(guideId: string): Observable<any> {
+    return this.http.get(`${environment.apigatewayUrl}/api-user/guide/getguide?guideid=${guideId}`)
+  }
+
 }

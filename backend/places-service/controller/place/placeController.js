@@ -59,7 +59,7 @@ const showPlaceById = async (req, res) => {
     try {
         const id = req.query.id
         const placeDetails = await placeCollection.find({ _id: new ObjectId(id) })
-        console.log(placeDetails);
+        // console.log(placeDetails);
         res.status(200).json({ place: placeDetails[0] })
     }
     catch (err) {
@@ -165,6 +165,28 @@ const addReview = async (req, res) => {
     } 
 }
 
+const reviewDetails = async (req, res) => {
+    try {
+        const placeId = req.query.placeid
+        const reviewList = await placeCollection.find({_id: new ObjectId(placeId)}, {reviews: 1, _id: 0})
+        const reviews = reviewList[0].reviews
+        // console.log('reviews - ',reviews);
+        let totalRating = 0;
+        let totalReviews = reviews.length;
+        reviews.forEach(review => {
+            totalRating += review.rating;
+        });
+        const averageRating = totalReviews > 0 ? totalRating / totalReviews : 0;
+        // console.log('Average Rating:', averageRating);
+        // console.log('Total Reviews:', totalReviews);
+        console.log(reviews, totalReviews, averageRating);
+        res.status(200).json({reviews, totalReviews, averageRating})
+    }
+    catch(err) {
+        console.log('error at review details- '. err);
+    }
+}
+
 
 
 module.exports = {
@@ -175,5 +197,6 @@ module.exports = {
     getPlaceImageById,
     getPlaceBySearch,
     getPlaceById,
-    addReview
+    addReview,
+    reviewDetails
 }

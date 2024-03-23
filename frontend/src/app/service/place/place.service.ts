@@ -45,4 +45,8 @@ export class PlaceService {
     const data = {userId, placeId,  rating, review}
     return this.http.post(`${environment.apigatewayUrl}/api-places/place/addreview`, data)
   }
+
+  getReviews(placeId: number) :Observable<any> {
+    return this.http.get(`${environment.apigatewayUrl}/api-places/place/reviewdetails?placeid=${placeId}`)
+  }
 }

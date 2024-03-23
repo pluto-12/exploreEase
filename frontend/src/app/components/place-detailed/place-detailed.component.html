@@ -7,16 +7,17 @@
             <h2>{{ placeDetails.placeName }}</h2>
             <p>{{placeDetails.placeDescription}}</p>
             <mat-divider></mat-divider>
-            <p>Rating: 5</p>
+            <p>Rating: {{averageRating}} out of {{totalReviews}}</p>
             <button mat-raised-button color="accent" (click)="addReviews()">Add Review</button>
             <mat-divider></mat-divider>
             <h3>Reviews</h3>
-            <mat-list>
-                <!-- <mat-list-item *ngFor="let review of spot.reviews"> -->
-                <h4 mat-line>Author</h4>
-                <p mat-line>Review Content</p>
-                <!-- </mat-list-item> -->
-            </mat-list>
+            <mat-card class="guide-card" *ngFor="let review of reviews">
+                <mat-card-content>
+                    <p mat-line>Author: {{review.userId}}</p>
+                    <p mat-line>Rating: {{review.rating}}</p>
+                    <p mat-line>Review: {{review.review}}</p>
+                </mat-card-content>
+            </mat-card>
         </mat-card-content>
     </mat-card>
 
@@ -24,7 +25,7 @@
         <mat-card-content>
             <h3>Guide Availability</h3>
             <div class="guide-availability">
-                <mat-card  class="guide-card" *ngFor="let guide of guideDetails">
+                <mat-card class="guide-card" *ngFor="let guide of guideDetails">
                     <mat-card-content>
                         <p>{{guide.guideName}}</p>
                         <p>{{guide.guideEmail}}</p>
@@ -35,7 +36,7 @@
         </mat-card-content>
     </mat-card>
 
-    <mat-card class="card">
+    <!-- <mat-card class="card">
         <mat-card-content>
             <h3>Blogs</h3>
             <div class="blogs">
@@ -49,5 +50,5 @@
                 </div>
             </div>
         </mat-card-content>
-    </mat-card>
+    </mat-card> -->
 </div>

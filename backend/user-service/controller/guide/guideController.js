@@ -161,6 +161,12 @@ const approveJob = async (req, res) => {
     res.status(200).json({success: true})
 }
 
+const getGuideById = async(req, res) => {
+    const guideId = req.query.guideid
+    const guideDetails = await guideCollection.find({_id: new ObjectId(guideId)})
+    res.status(200).json({guideDetails})
+}
+
 
 module.exports = {
     addGuide,
@@ -174,5 +180,6 @@ module.exports = {
     getGuideByPlaceAndDate,
     saveJob,
     getJobRequest,
-    approveJob
+    approveJob,
+    getGuideById
 }

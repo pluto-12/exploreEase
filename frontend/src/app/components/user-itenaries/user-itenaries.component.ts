@@ -95,6 +95,12 @@ export class UserItenariesComponent {
       });
   }
 
+  isPastDate(date: string): boolean {
+    const formattedDate = new Date(date);
+    const today = new Date();
+    return formattedDate < today;
+}
+
   chat(itenaryId: string) {
     console.log(itenaryId);
     this.router.navigate(['/user/chat'], {queryParams: {id: itenaryId}});

@@ -14,6 +14,7 @@
             <!-- <button mat-button *ngIf="!item.guide" (click)="hireGuide(item._id)">Guide Availability</button> -->
             <button *ngIf="item.guide && !item.guide.paymentCompleted || !item.guide" (click)="hireGuide(item._id)">Hire Guide</button>
             <button *ngIf="item.guide && item.guide.paymentCompleted" (click)="chat(item._id)">Chat with Guide</button>
+            <button *ngIf="item.guide && isPastDate(item.formattedDate)" mat-button>Rate Guide</button>
         </mat-card-actions>
     </mat-card>
 </div>

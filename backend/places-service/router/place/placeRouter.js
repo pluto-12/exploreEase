@@ -24,7 +24,7 @@ placeRouter.get('/getplaceimage', placeController.getPlaceImageById)
 placeRouter.get('/search', placeController.getPlaceBySearch)
 placeRouter.post('/getplacebyid', placeController.getPlaceById)
 placeRouter.post('/addreview', placeController.addReview)
-
+placeRouter.get('/reviewdetails', placeController.reviewDetails)
 
 
 

@@ -206,18 +206,30 @@ const getGuide = async (req, res) => {
     try {
         const userId = req.query.userid
         const itenaryId = req.query.itenaryid
-        const user = await userCollection.findOne({ _id: new ObjectId(userId), "itenaries._id": itenaryId },{ "itenaries.$": 1 });
+        const user = await userCollection.findOne({ _id: new ObjectId(userId), "itenaries._id": itenaryId }, { "itenaries.$": 1 });
         // console.log('user- ', user);
         const itinerary = user.itenaries[0];
         const guideId = itinerary.guide.guideId;
         // console.log('guideID - ',guideId);
-        const guideDetails = await guideCollection.find({_id: new ObjectId(guideId)})
+        const guideDetails = await guideCollection.find({ _id: new ObjectId(guideId) })
         console.log(guideDetails);
-        res.status(200).json({success: true, guideDetails})
+        res.status(200).json({ success: true, guideDetails })
 
     }
     catch (err) {
         console.log('error at getGuide- ', err.message);
+    }
+}
+
+const cancelTrip = async (req, res) => {
+    try {
+        const userId = req.query.userid
+        const itenaryId = req.query.itenaryid
+        const newList = await userCollection.findOneAndUpdate({ _id: new ObjectId (userId) },{ $pull: { itenaries: { _id: new ObjectId(itenaryId) } } },{ new: true });
+        res.status(200).json({success: true})
+    }
+    catch(err) {
+        console.log('error at cancel trip - ', err);
     }
 }
 
@@ -230,6 +242,7 @@ module.exports = {
     saveitenary,
     getItenaryByUserId,
     addGuideToItenary,
-    razorpayPayment, 
-    getGuide
+    razorpayPayment,
+    getGuide,
+    cancelTrip
 }

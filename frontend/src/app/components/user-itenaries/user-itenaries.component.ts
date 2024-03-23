@@ -99,10 +99,32 @@ export class UserItenariesComponent {
     const formattedDate = new Date(date);
     const today = new Date();
     return formattedDate < today;
-}
+  }
 
   chat(itenaryId: string) {
     console.log(itenaryId);
-    this.router.navigate(['/user/chat'], {queryParams: {id: itenaryId}});
+    this.router.navigate(['/user/chat'], { queryParams: { id: itenaryId } });
+  }
+
+  cancelTrip(itenaryId: string) {
+    const trip = this.itenaries.filter(
+      (itenary: any) => itenary._id == itenaryId
+    );
+    let customerId;
+    this.store.select(userSelector.selectUserState).subscribe((response) => {
+      customerId = response.user?.id;
+    });
+    this.userService.cancelTrip(customerId, itenaryId).subscribe((response) => {
+      this.getItenaries();
+    });
+    if (trip[0].guide) {
+      console.log('insode guide');
+      const guideId = trip[0].guide.guideId;
+      this.guideService
+        .cancelJob(guideId, customerId)
+        .subscribe((respnse) => {
+          console.log(respnse);
+        });
+    }
   }
 }

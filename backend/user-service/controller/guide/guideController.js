@@ -143,28 +143,41 @@ const getJobRequest = async (req, res) => {
     const guideId = req.query.id
     const jobRequest = await guideCollection.find({ _id: new ObjectId(guideId), 'jobs.isApproved': true }, { jobs: { $elemMatch: { isApproved: true } } })
     // console.log(jobRequest[0].jobs);
-    if(jobRequest.length != 0) {
+    if (jobRequest.length != 0) {
         const jobRequests = jobRequest[0].jobs
         res.status(200).json({ jobRequests })
     } else {
         res.status(200)
     }
-    
+
 }
 
 const approveJob = async (req, res) => {
     console.log('here');
     const guideId = req.query.guideid
     const jobId = req.query.jobid
-    console.log('ids',guideId, jobId);
-    const result = await guideCollection.updateOne({ _id: new ObjectId(guideId), 'jobs._id': new ObjectId(jobId) },{ $set: { 'jobs.$.isApproved': true } })
-    res.status(200).json({success: true})
+    console.log('ids', guideId, jobId);
+    const result = await guideCollection.updateOne({ _id: new ObjectId(guideId), 'jobs._id': new ObjectId(jobId) }, { $set: { 'jobs.$.isApproved': true } })
+    res.status(200).json({ success: true })
 }
 
-const getGuideById = async(req, res) => {
+const getGuideById = async (req, res) => {
     const guideId = req.query.guideid
-    const guideDetails = await guideCollection.find({_id: new ObjectId(guideId)})
-    res.status(200).json({guideDetails})
+    const guideDetails = await guideCollection.find({ _id: new ObjectId(guideId) })
+    res.status(200).json({ guideDetails })
+}
+
+const cancelJob = async (req, res) => {
+    try{
+        const guideId = req.query.guideid
+        const customerId = req.query.userid
+        const newList = await guideCollection.findOneAndUpdate({ _id: new ObjectId(guideId) },{ $pull: { jobs: { customerId: customerId } } },{ new: true });
+        console.log('here -,' ,  newList);
+        res.status(200).json({success: true})
+    }
+    catch(err) {
+        console.log('error cancel job guide - ', err);
+    }
 }
 
 
@@ -181,5 +194,6 @@ module.exports = {
     saveJob,
     getJobRequest,
     approveJob,
-    getGuideById
+    getGuideById,
+    cancelJob
 }

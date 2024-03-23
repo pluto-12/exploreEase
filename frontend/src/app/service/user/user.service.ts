@@ -28,4 +28,8 @@ export class UserService {
   getGuideId(userId: any, itenaryId: string): Observable<any> {
     return this.http.get(`${environment.apigatewayUrl}/api-user/user/getguide?userid=${userId}&itenaryid=${itenaryId}`)
   } 
+
+  cancelTrip(userId: any, itenaryId: string): Observable<any> {
+    return this.http.get(`${environment.apigatewayUrl}/api-user/user/canceltrip?userid=${userId}&itenaryid=${itenaryId}`)
+  }
 }

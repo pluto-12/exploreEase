@@ -47,4 +47,8 @@ export class GuideService {
     return this.http.get(`${environment.apigatewayUrl}/api-user/guide/getguide?guideid=${guideId}`)
   }
 
+  cancelJob(guideId: string, customerId: any):Observable<any> {
+    return this.http.get(`${environment.apigatewayUrl}/api-user/guide/canceljob?guideid=${guideId}&userid=${customerId}`)
+  }
+
 }

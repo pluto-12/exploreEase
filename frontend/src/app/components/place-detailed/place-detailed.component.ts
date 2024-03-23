@@ -32,6 +32,20 @@ export class PlaceDetailedComponent {
       // console.log(params['id']);
       this.placeId = params['id'];
     });
+    this.getPlaceDetails()
+  }
+
+  addReviews() {
+    const dialogRef = this.dialog.open(AddReviewDialogComponent, {
+      width: '500px',
+      data: this.placeId,
+    });
+    dialogRef.afterClosed().subscribe((response) => {
+      this.getPlaceDetails()
+    });
+  }
+
+  getPlaceDetails() {
     this.placeService.getPlaceById(this.placeId).subscribe((response) => {
       // console.log(response);
       this.placeDetails = response.place;
@@ -63,13 +77,5 @@ export class PlaceDetailedComponent {
         this.totalReviews
       );
     });
-  }
-
-  addReviews() {
-    const dialogRef = this.dialog.open(AddReviewDialogComponent, {
-      width: '500px',
-      data: this.placeId,
-    });
-    dialogRef.afterClosed().subscribe((response) => {});
   }
 }
